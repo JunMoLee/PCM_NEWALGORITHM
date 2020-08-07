@@ -81,6 +81,8 @@ for (int r=0; r<100; r++){
 	weighttrack=0;
 	TrackRate=150;
 	
+	multilevel=1;
+	
 	
 	/* Algorithm parameters */
 	numTrainImagesPerEpoch = 2000;	// # of training images per epoch
