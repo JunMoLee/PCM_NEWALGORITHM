@@ -586,13 +586,13 @@ double s2[param->nOutput];  // Output delta from hidden layer to the output laye
 		            random_device rd;
 			    mt19937 gen(rd());
 			    uniform_int_distribution<int> dis(0,param->IHprob);
-			   if(param->useprob==1) if(dis(gen)==0) reset=1; 
+			 if(dis(gen)==0) reset=1; 
 				
 			   int reset2=0;
 		            random_device rd1;
 			    mt19937 gen1(rd1());
 			    uniform_int_distribution<int> dis1(0,param->specialprob);
-			   if(param->useprob==1) if(dis1(gen1)==0) reset2=1; 
+			   if(dis1(gen1)==0) reset2=1; 
 			    
 			 /*   if((dynamic_cast<AnalogNVM*>(arrayIH->cell[jj][k])->dd==counteradaptIH) || (dynamic_cast<AnalogNVM*>(arrayIH->cell[jj][k])->dd==(counteradaptIH + 1)))
 			    {reset=1;} */
@@ -618,6 +618,7 @@ double s2[param->nOutput];  // Output delta from hidden layer to the output laye
 
 				               
 						          // adpative weight update 
+				if(param->useprob==1) {
 				                           if((batchSize+numTrain*(epochcount-1))==param->TrackRate*2-1)
 							   {			 
 							      if(updatepattern[areanum][0]*1000+updatepattern[areanum][1]*100+updatepattern[areanum][2]*10+updatepattern[areanum][3] == 2211)
@@ -853,6 +854,15 @@ double s2[param->nOutput];  // Output delta from hidden layer to the output laye
 			    if(counteradaptIH == maxcounterIH-1)
 			    {counteradaptIH =0;}
 							   }
+				}
+				else {
+						      learningrateIH[0] = param->learningrate[0][0];
+							      learningrateIH[1] = param->learningrate[0][1];
+							      learningrateIH[2] = param->learningrate[0][2];
+							      learningrateIH[3] = param->learningrate[0][3];
+					       posstopreverse=0;
+						              negstopreverse=0;
+				}
 				                           // reset weightupdatepattern
 				                                
 				                
@@ -1288,7 +1298,7 @@ double s2[param->nOutput];  // Output delta from hidden layer to the output laye
 			  random_device rd;
 			    mt19937 gen(rd());
 			    uniform_int_distribution<int> dis(0,param->HOprob);
-			    if(param->useprob==1){if(dis(gen)==0) reset=1; }
+			   if(dis(gen)==0) reset=1; 
 				
 					            int reset2=0;
 			/*   if((dynamic_cast<AnalogNVM*>(arrayHO->cell[jj][k])->dd==(counteradaptHO)) || (dynamic_cast<AnalogNVM*>(arrayHO->cell[jj][k])->dd==(counteradaptHO+1)))
@@ -1297,7 +1307,7 @@ double s2[param->nOutput];  // Output delta from hidden layer to the output laye
 			  random_device rd1;
 			    mt19937 gen1(rd1());
 			    uniform_int_distribution<int> dis1(0,param->specialprob);
-			    if(param->useprob==1){if(dis1(gen1)==0) reset2=1; }
+			 if(dis1(gen1)==0) reset2=1; 
 				
 			/*   int adaptivegradient=0;
 			    for(int f=param->associatedindex[dynamic_cast<AnalogNVM*>(arrayHO->cell[jj][k])->areanum][0]; f<param->associatedindex[dynamic_cast<AnalogNVM*>(arrayHO->cell[jj][k])->areanum][1]; f++)
@@ -1341,6 +1351,7 @@ double s2[param->nOutput];  // Output delta from hidden layer to the output laye
 						       } */
 				
 							   // adpative weight update 
+				 if(param->useprob==1){
 				                         if((batchSize+numTrain*(epochcount-1))==param->TrackRate*2-1)
 							   {
 							      if(updatepattern[areanum][0]*1000+updatepattern[areanum][1]*100+updatepattern[areanum][2]*10+updatepattern[areanum][3] == 2211)
@@ -1569,6 +1580,15 @@ double s2[param->nOutput];  // Output delta from hidden layer to the output laye
 			    if(counteradaptHO == maxcounterHO-1)
 			    {counteradaptHO =0;}
 							   }
+				 }
+				else {
+					  learningrateHO[0] = param->learningrate[0][0];
+							      learningrateHO[1] = param->learningrate[0][1];
+							      learningrateHO[2] = param->learningrate[0][2];
+							      learningrateHO[3] = param->learningrate[0][3];
+					      posstopreverse=0;
+						              negstopreverse=0;
+				}
 				                          // reset weightupdatepattern
 				                                
 			
