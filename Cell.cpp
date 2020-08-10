@@ -754,7 +754,7 @@ void RealDevice::newWrite(double deltaWeightNormalized, double weight, double mi
 	bool GpGnCell = true;
 		switch (updatecase){
 			case 0: 	// + reverse update
-		updatecase=0;
+		
 		deltaWeightSign = 0; // reverse update
 		upc++;
 		GpGnCell = false;
@@ -963,8 +963,8 @@ for (int i=0; i<param->cellnumber; i++){
 
 void RealDevice::Erase() {
 for (int i=0; i<param->cellnumber; i++){
-	this->conductanceGp[i]=pmaxConductance;	// Current conductance (S) (dynamic variable)
-	this->conductanceGn[i]=nmaxConductance;
+	this->conductanceGp[i]=pminConductance;	// Current conductance (S) (dynamic variable)
+	this->conductanceGn[i]=nminConductance;
 	}
 }
 
