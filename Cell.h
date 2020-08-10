@@ -61,7 +61,7 @@ public:
 	               int os=10;  // os = number of output layer slice
 	               int allocationmethod=0;
 
-		       
+		       vector <vector <int>> multicell;
 	             
 
 	
@@ -136,6 +136,9 @@ public:
 	
 	/* define area */
 	int areanum=0;
+	
+	/* multicell counter */
+	int multicellcounter =0;
 };
 
 class SRAM: public Cell {
