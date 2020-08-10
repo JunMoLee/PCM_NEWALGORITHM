@@ -61,7 +61,7 @@ public:
 	               int os=10;  // os = number of output layer slice
 	               int allocationmethod=0;
 
-		       vector <vector <int>> multicell;
+		       vector <vector <double>> multicell;
 	             
 
 	
@@ -83,14 +83,14 @@ public:
 	double writePulseWidthLTD;	// Write pulse width (s) of LTD or weight decrease
 	double writeEnergy;	// Dynamic variable for calculation of write energy (J)
 	double conductance;	// Current conductance (S) (Dynamic variable) at on-chip Vr (different than the Vr in the reported measurement data)
-	double conductanceGp;
-	double conductanceGn;        
-	double pminConductance=0;
-	double pmaxConductance=0;
-	double nminConductance=0;
-	double nmaxConductance=0;
+	vector <double> conductanceGp;
+	vector <double> conductanceGn;        
+	vector  pminConductance=0;
+	vector  pmaxConductance=0;
+	vector  nminConductance=0;
+	vector  nmaxConductance=0;
 	double refConductance=0;
-	double conductancePrev;	// Previous conductance (S) (Dynamic variable) at on-chip Vr (different than the Vr in the reported measurement data)
+	vector <double> conductancePrev;	// Previous conductance (S) (Dynamic variable) at on-chip Vr (different than the Vr in the reported measurement data)
 	double maxConductance;	// Maximum cell conductance (S)
 	double minConductance;	// Minimum cell conductance (S)
 	double avgMaxConductance;   // Average maximum cell conductance (S)
