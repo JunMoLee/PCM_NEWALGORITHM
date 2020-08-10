@@ -80,6 +80,12 @@ for (int r=0; r<100; r++){
 	/* Weight track variables */
 	weighttrack=0;
 	TrackRate=150;
+	useprob=1;
+	IHprob=9;
+	HOprob=9;
+	minusactivationlimit = 10^-4;
+	destructiveratio = 1.2;
+	specialprob=2;
 	
 	
 	
