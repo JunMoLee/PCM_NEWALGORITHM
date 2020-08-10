@@ -277,10 +277,6 @@ RealDevice::RealDevice(int x, int y, double p, double n, int l) {
 	this-> location =l;
 	
 	/* multicell */
-	for (int r=0; r<param->cellnumber; r++){
-        vector <int> GpGn (2,0);
-	multicell.push_back(GpGn);
-		}
 	
 	
 	for (int r=0; r<param->cellnumber; r++){
@@ -541,7 +537,7 @@ double RealDevice::Read(double voltage) {	// Return read current (A)
 		}
 	}
 }
-void RealDevice::InitialWrite (deltaweight){
+void RealDevice::InitialWrite (double deltaweight){
 	int cellindex=0;
 	double deltaweightabs=deltaweight;
 	double pcondrange = pmaxConductance - pminConductance;
