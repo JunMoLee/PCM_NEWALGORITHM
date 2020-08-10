@@ -87,14 +87,14 @@ void WeightToConductance() {
     /* Write weight to arrayIH */
     for (int col=0; col<param->nHide; col++) {
         for (int row=0; row<param->nInput; row++) {
-            arrayIH->InitializeCell(col, row, weight1[col][row]);
+            arrayIH->WriteCell(col, row, weight1[col][row], weight1[col][row], 1, -1, false);
 			//std::cout << arrayIH->ConductanceToWeight(col, row, param->maxWeight, param->minWeight) << std::endl;
         }
     }
     /* Write weight to arrayHO */
     for (int col=0; col<param->nOutput; col++) {
         for (int row=0; row<param->nHide; row++) {
-            arrayHO->InitializeCell(col, row, weight2[col][row]);
+            arrayHO->WriteCell(col, row, weight2[col][row], weight2[col][row], 1, -1, false);
         }
     }
 }
