@@ -85,10 +85,10 @@ public:
 	double conductance=0;	// Current conductance (S) (Dynamic variable) at on-chip Vr (different than the Vr in the reported measurement data)
 	vector <double> conductanceGp;
 	vector <double> conductanceGn;        
-	vector  pminConductance=0;
-	vector  pmaxConductance=0;
-	vector  nminConductance=0;
-	vector  nmaxConductance=0;
+	double pminConductance=0;
+	double pmaxConductance=0;
+	double nminConductance=0;
+	double nmaxConductance=0;
 	double refConductance=0;
 	double conductancePrev;	// Previous conductance (S) (Dynamic variable) at on-chip Vr (different than the Vr in the reported measurement data)
 	double maxConductance;	// Maximum cell conductance (S)
