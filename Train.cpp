@@ -1641,7 +1641,7 @@ double s2[param->nOutput];  // Output delta from hidden layer to the output laye
 			}
 			
 	      /* conductance saturation management: Full-Reset */ 
-			if(!stopreset&&(int)(param -> FullRefresh)/adFrr){
+		/*	if(!stopreset&&(int)(param -> FullRefresh)/adFrr){
 				
 			if ((batchSize+numTrain*(epochcount-1)) % param->RefreshRate == (param->RefreshRate-1)) { //ERASE
 				for (int j = 0; j < param->nHide; j++) {
@@ -1673,7 +1673,7 @@ double s2[param->nOutput];  // Output delta from hidden layer to the output laye
 		  
 			} // end of if code
 				
-			} // end of full-reset code
+			} // end of full-reset code */
 			       
 
 			
