@@ -552,10 +552,9 @@ void RealDevice::InitialWrite (double deltaweight){
 		cellindex++;
 		}
 		conductanceGp[cellindex] = deltaweightcondscale;
-		
-		
-		
+
 	}
+	
 	else {deltaweightabs=-deltaweight;
 	      deltaweightcondscale = deltaweightabs/2 * param->cellnumber * totalcondrange;
 		while(deltaweightcondscale>ncondrange){
@@ -564,9 +563,11 @@ void RealDevice::InitialWrite (double deltaweight){
 		cellindex++;
 		}
 		conductanceGn[cellindex] = deltaweightcondscale;
-	     }
+	  }
 	
 }
+
+
 void RealDevice::Write(double deltaWeightNormalized, double weight, double minWeight, double maxWeight, double learningrate []) {
 	
 	/* multicell selection */
@@ -707,9 +708,11 @@ void RealDevice::newWrite(double deltaWeightNormalized, double weight, double mi
 	int reversecellnumberGn =0;
 	int currentconductanceGp = pmaxConductance;
 	int currentconductanceGn = nmaxConductance;
+	
 	for (int i=0; i<param->cellnumber; i++){
-	if(conductanceGp[i]<currentconductanceGp) {reversecellnumberGp=i; currentconductanceGp=conductanceGp[i];
+	if(conductanceGp[i]<currentconductanceGp) {reversecellnumberGp=i; currentconductanceGp=conductanceGp[i];}
 	if(conductanceGn[i]<currentconductanceGn) {reversecellnumberGn=i; currentconductanceGn=conductanceGn[i];}
+	}
 	// Current conductance (S) (dynamic variable)
 	
 	
