@@ -711,7 +711,7 @@ void RealDevice::newWrite(double deltaWeightNormalized, double weight, double mi
 	if(conductanceGp[i]<currentconductanceGp) {reversecellnumberGp=i; currentconductanceGp=conductanceGp[i];
 	if(conductanceGn[i]<currentconductanceGn) {reversecellnumberGn=i; currentconductanceGn=conductanceGn[i];}
 	// Current conductance (S) (dynamic variable)
-	}
+	
 	
 	/* classify the 4 cases into numbers */
 	int updatecase;
@@ -960,8 +960,8 @@ for (int i=0; i<param->cellnumber; i++){
 
 void RealDevice::Erase() {
 for (int i=0; i<param->cellnumber; i++){
-	this->conductanceGp[i]=0;	// Current conductance (S) (dynamic variable)
-	this->conductanceGn[i]=0;
+	this->conductanceGp[i]=pmaxConductance;	// Current conductance (S) (dynamic variable)
+	this->conductanceGn[i]=nmaxConductance;
 	}
 }
 
