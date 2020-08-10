@@ -742,8 +742,7 @@ void RealDevice::newWrite(double deltaWeightNormalized, double weight, double mi
 			break;
 			
 	}
-	double conductanceNewGp = conductanceGp;
-	double conductanceNewGn = conductanceGn;
+
 	double totalcondrange = pmaxConductance + nmaxConductance - pminConductance - nminConductance;
 	double pcondrange = pmaxConductance - pminConductance;
 	double ncondrange = nmaxConductance - nminConductance;
@@ -751,7 +750,7 @@ void RealDevice::newWrite(double deltaWeightNormalized, double weight, double mi
 	
 	bool GpGnCell = true;
 		switch (updatecase){
-			case 0: {	// + reverse update
+			case 0: 	// + reverse update
 		updatecase=0;
 		deltaWeightSign = 0; // reverse update
 		upc++;
@@ -774,9 +773,9 @@ void RealDevice::newWrite(double deltaWeightNormalized, double weight, double mi
 			conductanceNewGn = (xPulse-numPulse) / maxNumLevelnLTD * (nmaxConductance - nminConductance) + nminConductance;
 		}
 	break;
-	} 
 	
-			case 1:  {	// Gn normal update
+	
+			case 1:  	// Gn normal update
 		updatecase=1;
 		if(deltaWeightNormalized == 0)
 		uzc++;
@@ -800,12 +799,12 @@ void RealDevice::newWrite(double deltaWeightNormalized, double weight, double mi
 			conductanceNewGn = (xPulse+numPulse) / maxNumLevelnLTP * (nmaxConductance - nminConductance) + nminConductance;
 		}
 				break;
-	} 
+	
 	
 
 	
 	
-			case 2: {	// - reverse update
+			case 2: 	// - reverse update
 		updatecase=2;
 		if(deltaWeightNormalized == 0)
 		uzc++;
@@ -833,9 +832,9 @@ void RealDevice::newWrite(double deltaWeightNormalized, double weight, double mi
 		}
 		
 		break;
-	}
 	
-			case 3: {	// Gp normal update
+	
+			case 3: 	// Gp normal update
 		updatecase=3;
 		deltaWeightSign = deltaWeightNormalized;
 		upc++;
@@ -856,8 +855,8 @@ void RealDevice::newWrite(double deltaWeightNormalized, double weight, double mi
 			conductanceNewGp = (xPulse+numPulse) / maxNumLevelpLTP * (pmaxConductance - pminConductance) + pminConductance;
 		}
 				break;
-	}
-		}
+	
+	}  // end of switch
 	
 	
 	
