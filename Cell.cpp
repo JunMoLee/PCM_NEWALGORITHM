@@ -958,8 +958,7 @@ for (int i=0; i<param->cellnumber; i++){
 
 
 
-void RealDevice::Erase()
-{
+void RealDevice::Erase() {
 for (int i=0; i<param->cellnumber; i++){
 	conductanceGp[i]=0;	// Current conductance (S) (dynamic variable)
 	conductanceGn[i]=0;
