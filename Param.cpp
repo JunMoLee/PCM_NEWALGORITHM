@@ -185,6 +185,7 @@ for (int r=0; r<100; r++){
 	nurn=150;
 	newUpdateRate = nur; // rate of new update algorithm implementation (per # of images)
 	nnewUpdateRate =nurn;
+	cellnumber=2;
 const int
 a=0;
 	
