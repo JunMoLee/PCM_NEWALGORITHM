@@ -82,7 +82,7 @@ public:
 	double writePulseWidthLTP;	// Write pulse width (s) of LTP or weight increase
 	double writePulseWidthLTD;	// Write pulse width (s) of LTD or weight decrease
 	double writeEnergy;	// Dynamic variable for calculation of write energy (J)
-	double conductance;	// Current conductance (S) (Dynamic variable) at on-chip Vr (different than the Vr in the reported measurement data)
+	double conductance=0;	// Current conductance (S) (Dynamic variable) at on-chip Vr (different than the Vr in the reported measurement data)
 	vector <double> conductanceGp;
 	vector <double> conductanceGn;        
 	vector  pminConductance=0;
@@ -90,7 +90,7 @@ public:
 	vector  nminConductance=0;
 	vector  nmaxConductance=0;
 	double refConductance=0;
-	vector <double> conductancePrev;	// Previous conductance (S) (Dynamic variable) at on-chip Vr (different than the Vr in the reported measurement data)
+	double conductancePrev;	// Previous conductance (S) (Dynamic variable) at on-chip Vr (different than the Vr in the reported measurement data)
 	double maxConductance;	// Maximum cell conductance (S)
 	double minConductance;	// Minimum cell conductance (S)
 	double avgMaxConductance;   // Average maximum cell conductance (S)
@@ -196,6 +196,7 @@ public:
 
 	virtual double Read(double voltage) = 0;
 	virtual void Write(double deltaWeightNormalized, double weight, double minWeight, double maxWeight, double learningrate [] = param -> defaultlearningrate[0]) = 0;
+	void InitialWrite(deltaweight);
 	double GetMaxReadCurrent(){
 		if (cmosAccess)
 			return readVoltage * 1 / (1 / avgMaxConductance);//+resistanceAccess);
