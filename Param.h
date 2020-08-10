@@ -131,7 +131,12 @@ public:
         double param_gn;       // for nonlinearity definition - exact definition depends on code
 	
 	bool useLTD;  // using LTD curve if true
-	
+	int useprob=0;
+	int IHprob=0;
+	int HOprob=0;
+	int specialprob;
+	double minusactivationlimit;
+	double destructiveratio;
 	int FullRefresh;    // use refresh if true
 	int ReverseUpdate;  // use reverse update if true
 	int TrackRate;
