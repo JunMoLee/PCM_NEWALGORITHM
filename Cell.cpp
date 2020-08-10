@@ -704,6 +704,7 @@ void RealDevice::newWrite(double deltaWeightNormalized, double weight, double mi
 	/* pick the cell with lowest Gp, Gn */
 	int currentcellnumber = multicellcounter % param->cellnumber;
 	int reversecellnumberGp =0;
+	int reversecellnumberGn =0;
 	int currentconductanceGp = pmaxConductance;
 	int currentconductanceGn = nmaxConductance;
 	for (int i=0; i<param->cellnumber; i++){
@@ -724,20 +725,20 @@ void RealDevice::newWrite(double deltaWeightNormalized, double weight, double mi
 	double conductanceNew = conductance;	// conductance if no update
 	switch (updatecase) {
 		case 0: 	
-	conductanceNewGp = conductanceGp;
+	
 	conductanceNewGn = conductanceGn[reversecellnumberGn];
 			break;
 		case 1:
-	conductanceNewGp = conductanceGp;
+	
 	conductanceNewGn = conductanceGn[currentcellnumber];
 			break;
 		case 2:
 	conductanceNewGp = conductanceGp[reversecellnumberGp];
-	conductanceNewGn = conductanceGn;
+	
 			break;
 		case 3:
 	conductanceNewGp = conductanceGp[currentcellnumber];
-	conductanceNewGn = conductanceGn;
+	
 			break;
 			
 	}
