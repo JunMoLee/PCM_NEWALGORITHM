@@ -72,18 +72,7 @@ void WeightInitialize() {
 
 /* Conductance initialization (map weight to RRAM conductance or SRAM data) */
 void WeightToConductance() {
-    /* Erase the weight of arrayIH */
-    for (int col=0; col<param->nHide; col++) {
-        for (int row=0; row<param->nInput; row++) {
-			arrayIH->EraseCell(col, row);
-        }
-    }
-    /* Erase the weight of arrayHO */
-    for (int col=0; col<param->nOutput; col++) {
-        for (int row=0; row<param->nHide; row++) {
-			arrayHO->EraseCell(col, row);
-        }
-    }
+
     /* Write weight to arrayIH */
     for (int col=0; col<param->nHide; col++) {
         for (int row=0; row<param->nInput; row++) {
