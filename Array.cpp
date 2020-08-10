@@ -198,11 +198,11 @@ void Array::WriteCell(int x, int y, double deltaWeight, double weight, double ma
         {	// Preparation stage (ideal write)
             //printf("initialize the conductance\n");
 
-			static_cast<RealDevice*>(cell[x][y])->EraseCell(x, y);
+			static_cast<RealDevice*>(cell[x][y])->Erase(x, y);
         
 
    
-                        static_cast<RealDevice*>(cell[x][y])->InitializeCell(deltaWeight);
+                        static_cast<RealDevice*>(cell[x][y])->InitialWrite(deltaWeight);
 	
 	}
     }
