@@ -196,7 +196,7 @@ public:
 
 	virtual double Read(double voltage) = 0;
 	virtual void Write(double deltaWeightNormalized, double weight, double minWeight, double maxWeight, double learningrate [] = param -> defaultlearningrate[0]) = 0;
-	void InitialWrite(deltaweight);
+	void InitialWrite(double deltaweight);
 	double GetMaxReadCurrent(){
 		if (cmosAccess)
 			return readVoltage * 1 / (1 / avgMaxConductance);//+resistanceAccess);
