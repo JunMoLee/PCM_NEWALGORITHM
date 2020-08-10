@@ -275,6 +275,19 @@ negstep=0;
 RealDevice::RealDevice(int x, int y, double p, double n, int l) {
 	this->x = x; this->y = y;	// Cell location: x (column) and y (row) start from index 0
 	this-> location =l;
+	
+	/* multicell */
+	for (int r=0; r<param->cellnumber; r++){
+        vector <int> GpGn (2,0);
+	multicell.push_back(GpGn);
+		}
+	
+	
+	for (int r=0; r<param->cellnumber; r++){
+	conductanceGp.push_back(0);
+	conductanceGn.push_back(0);
+		}
+	
 	/* allocate area */
 	              switch (location) {
 			    
@@ -374,16 +387,21 @@ RealDevice::RealDevice(int x, int y, double p, double n, int l) {
 	tn=12.5;
 	nminConductance = 3.0769e-9; 
 	nmaxConductance = 3.0769e-9 * param->tn;
-	refConductance = 3.0769e-9 * param->tn;
+	refConductance =0;
 	
 	// Minimum cell conductance (S)
 	//maxConductance = 1/4.71e6;
 	//minConductance = maxConductance / 19.6;
-	avgMaxConductance = pmaxConductance-nminConductance + refConductance ; // Average maximum cell conductance (S)
-	avgMinConductance = pminConductance-nmaxConductance + refConductance; // Average minimum cell conductance (S)
-	conductanceGp = pminConductance;
-	conductanceGn = nminConductance;
-	conductance = conductanceGp - conductanceGn + refConductance;	// Current conductance (S) (dynamic variable)
+	avgMaxConductance = (pmaxConductance-nminConductance + refConductance)*param->cellnumber; // Average maximum cell conductance (S)
+	avgMinConductance = (pminConductance-nmaxConductance + refConductance)*param->cellnumber; // Average minimum cell conductance (S)
+	for (int i=0; i<param->cellnumber; i++){
+	conductanceGp[i] = pminConductance;
+	conductanceGn[i] = nminConductance;
+
+	}
+	for (int i=0; i<param->cellnumber; i++){
+	conductance += conductanceGp[i] - conductanceGn[i] + refConductance;	// Current conductance (S) (dynamic variable)
+	}
 	conductancePrev = conductance;	// Previous conductance (S) (dynamic variable)
 	readVoltage = 0.5;	// On-chip read voltage (Vr) (V)
 	readPulseWidth = 5e-9;	// Read pulse width (s) (will be determined by ADC)
@@ -523,11 +541,47 @@ double RealDevice::Read(double voltage) {	// Return read current (A)
 		}
 	}
 }
-
+void RealDevice::InitialWrite (deltaweight){
+	int cellindex=0;
+	double deltaweightabs=deltaweight;
+	double pcondrange = pmaxConductance - pminConductance;
+	double ncondrange = nmaxConductance - nminConductance;
+	double totalcondrange = pmaxConductance + nmaxConductance - pminConductance - nminConductance;
+	double deltaweightcondscale;
+	if(deltaweight>0){
+		deltaweightcondscale = deltaweightabs/2 * param->cellnumber * totalcondrange;
+		while(deltaweightcondscale<pcondrange){
+		conductanceGp[cellindex] = pmaxConductance;
+		deltaweightcondscale -= pcondrange;
+		cellindex++;
+		}
+		deltaweightabs = deltaweightcondscale / pcondrange;
+		deltaweightabs = truncate(deltaweightabs, maxNumLevelpLTP);
+		numPulse = deltaweightabs* maxNumLevelpLTP;
+		conductanceGp[cellindex] = NonlinearWeight(xPulse+numPulse, maxNumLevelpLTP, paramAGp, paramBGp, pminConductance);
+	}
+	else {deltaweightabs=-deltaweight;
+	      deltaweightcondscale = deltaweightabs/2 * param->cellnumber * totalcondrange;
+		while(deltaweightcondscale<ncondrange){
+		conductanceGn[cellindex] = nmaxConductance;
+		deltaweightcondscale -= ncondrange;
+		cellindex++;
+		}
+		deltaweightabs = deltaweightcondscale / ncondrange;
+		deltaweightabs = truncate(deltaweightabs, maxNumLevelnLTP);
+		numPulse = deltaweightabs* maxNumLevelnLTP;
+		conductanceGn[cellindex] = NonlinearWeight(xPulse+numPulse, maxNumLevelnLTP, paramAGn, paramBGn, nminConductance);
+	     }
+	
+}
 void RealDevice::Write(double deltaWeightNormalized, double weight, double minWeight, double maxWeight, double learningrate []) {
+	
+	/* multicell selection */
+	int currentcellnumber = multicellcounter % param->cellnumber;
+	
 	double conductanceNew = conductance;	// =conductance if no update
-	double conductanceNewGp = conductanceGp;
-	double conductanceNewGn = conductanceGn;
+	double conductanceNewGp = conductance;
+	double conductanceNewGn = conductance;
 	double totalcondrange = pmaxConductance + nmaxConductance - pminConductance - nminConductance;
 	double pcondrange = pmaxConductance - pminConductance;
 	double ncondrange = nmaxConductance - nminConductance;
@@ -538,7 +592,7 @@ void RealDevice::Write(double deltaWeightNormalized, double weight, double minWe
 		deltaWeightSign = deltaWeightNormalized; // saturation count
 		upc++;
 		GpGnCell = true;
-		deltaWeightNormalized = learningrate[0]  * totalcondrange/pcondrange*deltaWeightNormalized/(maxWeight-minWeight);
+		deltaWeightNormalized = learningrate[0]  * totalcondrange*param->cellnumber/pcondrange*deltaWeightNormalized/(maxWeight-minWeight);
 		
 		deltaWeightNormalized = truncate(deltaWeightNormalized, maxNumLevelpLTP);
 		numPulse = deltaWeightNormalized * maxNumLevelpLTP;
@@ -547,10 +601,10 @@ void RealDevice::Write(double deltaWeightNormalized, double weight, double minWe
 			numPulse = maxNumLevelpLTP;
 		}
 		if (nonlinearWrite) {
-			xPulse = InvNonlinearWeight(conductanceGp, maxNumLevelpLTP, paramAGp, paramBGp, pminConductance);
+			xPulse = InvNonlinearWeight(conductanceGp[currentcellnumber], maxNumLevelpLTP, paramAGp, paramBGp, pminConductance);
 			conductanceNewGp = NonlinearWeight(xPulse+numPulse, maxNumLevelpLTP, paramAGp, paramBGp, pminConductance);
 		} else {
-			xPulse = (conductanceGp - pminConductance) / (pmaxConductance - pminConductance) * maxNumLevelpLTP;
+			xPulse = (conductanceGp[currentcellnumber] - pminConductance) / (pmaxConductance - pminConductance) * maxNumLevelpLTP;
 			conductanceNewGp = (xPulse+numPulse) / maxNumLevelpLTP * (pmaxConductance - pminConductance) + pminConductance;
 		}
 	} else {	// Gn update (- update)
@@ -561,7 +615,7 @@ void RealDevice::Write(double deltaWeightNormalized, double weight, double minWe
 		{unc++;
 		 deltaWeightSign = deltaWeightNormalized;} // saturation count
 		GpGnCell = false;
-		deltaWeightNormalized = -learningrate[1]  * totalcondrange/ncondrange*deltaWeightNormalized/(maxWeight-minWeight);
+		deltaWeightNormalized = -learningrate[1]  * totalcondrange*param->cellnumber/ncondrange*deltaWeightNormalized/(maxWeight-minWeight);
 		
 		deltaWeightNormalized = truncate(deltaWeightNormalized, maxNumLevelnLTP);
 		numPulse = deltaWeightNormalized * maxNumLevelnLTP;
@@ -570,10 +624,10 @@ void RealDevice::Write(double deltaWeightNormalized, double weight, double minWe
 			numPulse = maxNumLevelnLTP;
 		} 
 		if (nonlinearWrite){
-		        xPulse = InvNonlinearWeight(conductanceGn, maxNumLevelnLTP, paramAGn, paramBGn, nminConductance);
+		        xPulse = InvNonlinearWeight(conductanceGn[currentcellnumber], maxNumLevelnLTP, paramAGn, paramBGn, nminConductance);
 			conductanceNewGn = NonlinearWeight(xPulse+numPulse, maxNumLevelnLTP, paramAGn, paramBGn, nminConductance);
 		} else {
-			xPulse = (conductanceGn- nminConductance) / (nmaxConductance - nminConductance) * maxNumLevelnLTP;
+			xPulse = (conductanceGn[currentcellnumber]- nminConductance) / (nmaxConductance - nminConductance) * maxNumLevelnLTP;
 			conductanceNewGn = (xPulse+numPulse) / maxNumLevelnLTP * (nmaxConductance - nminConductance) + nminConductance;
 		}
 	}
@@ -639,17 +693,62 @@ void RealDevice::Write(double deltaWeightNormalized, double weight, double minWe
 		}
 	}
 	
-	conductancePrev = conductance;
-	conductanceGp = conductanceNewGp;
-	conductanceGn = conductanceNewGn;
-	conductanceNew = conductanceNewGp - conductanceNewGn + refConductance;
-	conductance = conductanceNew;
+	conductance=0;
+	conductanceGp[currentcellnumber] = conductanceNewGp;
+	conductanceGn[currentcellnumber] = conductanceNewGn;
+	conductanceNew = conductanceNewGp - conductanceNewGn;
+	for (int i=0; i<param->cellnumber; i++){
+	conductance += conductanceGp[i] - conductanceGn[i] + refConductance;	// Current conductance (S) (dynamic variable)
+	}
+	
+	/* update multicellcounter */
+	multicellcounter++;
 }
 
 ////////new write/////////////
 
 void RealDevice::newWrite(double deltaWeightNormalized, double weight, double minWeight, double maxWeight, bool positiveupdate, double  learningrate []) {
+	
+	/* pick the cell with lowest Gp, Gn */
+	int currentcellnumber = multicellcounter % param->cellnumber;
+	int reversecellnumberGp =0;
+	int currentconductanceGp = pmaxConductance;
+	int currentconductanceGn = nmaxConductance;
+	for (int i=0; i<param->cellnumber; i++){
+	if(conductanceGp[i]<currentconductanceGp) {reversecellnumberGp=i; currentconductanceGp=conductanceGp[i];
+	if(conductanceGn[i]<currentconductanceGn) {reversecellnumberGn=i; currentconductanceGn=conductanceGn[i];}
+	// Current conductance (S) (dynamic variable)
+	}
+	
+	/* classify the 4 cases into numbers */
+	int updatecase;
+	if (positiveupdate && (deltaWeightNormalized > 0)){ updatecase =0;}
+		else if (positiveupdate && (deltaWeightNormalized <= 0)) { updatecase =1;}
+			else if (!positiveupdate && (deltaWeightNormalized <= 0)) { updatecase =2;}
+				else if (!positiveupdate && (deltaWeightNormalized > 0)) { updatecase =3;}
+	
+	double conductanceNewGp = 0;
+	double conductanceNewGn = 0;
 	double conductanceNew = conductance;	// conductance if no update
+	switch (updatecase) {
+		case 0: 	
+	conductanceNewGp = conductanceGp;
+	conductanceNewGn = conductanceGn[reversecellnumberGn];
+			break;
+		case 1:
+	conductanceNewGp = conductanceGp;
+	conductanceNewGn = conductanceGn[currentcellnumber];
+			break;
+		case 2:
+	conductanceNewGp = conductanceGp[reversecellnumberGp];
+	conductanceNewGn = conductanceGn;
+			break;
+		case 3:
+	conductanceNewGp = conductanceGp[currentcellnumber];
+	conductanceNewGn = conductanceGn;
+			break;
+			
+	}
 	double conductanceNewGp = conductanceGp;
 	double conductanceNewGn = conductanceGn;
 	double totalcondrange = pmaxConductance + nmaxConductance - pminConductance - nminConductance;
@@ -658,11 +757,13 @@ void RealDevice::newWrite(double deltaWeightNormalized, double weight, double mi
 	double deltaWeightSign;
 	
 	bool GpGnCell = true;
-	if (positiveupdate && (deltaWeightNormalized > 0)) {	// + reverse update
+		switch (updatecase){
+			case 0: {	// + reverse update
+		updatecase=0;
 		deltaWeightSign = 0; // reverse update
 		upc++;
 		GpGnCell = false;
-		deltaWeightNormalized = learningrate[2]  * totalcondrange/ncondrange*deltaWeightNormalized/(maxWeight-minWeight);
+		deltaWeightNormalized = learningrate[2]  * totalcondrange*param->cellnumber/ncondrange*deltaWeightNormalized/(maxWeight-minWeight);
 	        if(maxNumLevelnLTD==1)
 		deltaWeightNormalized = newtruncate(deltaWeightNormalized, maxNumLevelnLTD);
 		else
@@ -673,23 +774,24 @@ void RealDevice::newWrite(double deltaWeightNormalized, double weight, double mi
 			numPulse = maxNumLevelnLTD;
 		}
 		if (nonlinearWrite) {
-		        xPulse = InvNonlinearWeight(conductanceGn, maxNumLevelnLTD, paramAGnd, paramBGnd, nminConductance);
+		        xPulse = InvNonlinearWeight(conductanceGn[reversecellnumberGn], maxNumLevelnLTD, paramAGnd, paramBGnd, nminConductance);
 			conductanceNewGn = NonlinearWeight(xPulse-numPulse, maxNumLevelnLTD, paramAGnd, paramBGnd, nminConductance);
 		} else {
-			xPulse = (conductanceGn- nminConductance) / (nmaxConductance - nminConductance) * maxNumLevelnLTD;
+			xPulse = (conductanceGn[reversecellnumberGn]- nminConductance) / (nmaxConductance - nminConductance) * maxNumLevelnLTD;
 			conductanceNewGn = (xPulse-numPulse) / maxNumLevelnLTD * (nmaxConductance - nminConductance) + nminConductance;
 		}
-	
+	break;
 	} 
 	
-	else if (positiveupdate && (deltaWeightNormalized <= 0)) {	// Gn normal update
+			case 1:  {	// Gn normal update
+		updatecase=1;
 		if(deltaWeightNormalized == 0)
 		uzc++;
 		else
 		{unc++;
 		 deltaWeightSign = deltaWeightNormalized;} // saturation count
 	        GpGnCell = false;
-		deltaWeightNormalized = - learningrate[1]  * totalcondrange/ncondrange*deltaWeightNormalized/(maxWeight-minWeight);
+		deltaWeightNormalized = - learningrate[1]  * totalcondrange*param->cellnumber/ncondrange*deltaWeightNormalized/(maxWeight-minWeight);
 		
 		deltaWeightNormalized = truncate(deltaWeightNormalized, maxNumLevelnLTP);
 		numPulse = deltaWeightNormalized * maxNumLevelnLTP;
@@ -698,26 +800,27 @@ void RealDevice::newWrite(double deltaWeightNormalized, double weight, double mi
 			numPulse = maxNumLevelnLTP;
 		} 
 		if (nonlinearWrite){
-		        xPulse = InvNonlinearWeight(conductanceGn, maxNumLevelnLTP, paramAGn, paramBGn, nminConductance);
+		        xPulse = InvNonlinearWeight(conductanceGn[currentcellnumber], maxNumLevelnLTP, paramAGn, paramBGn, nminConductance);
 			conductanceNewGn = NonlinearWeight(xPulse+numPulse, maxNumLevelnLTP, paramAGn, paramBGn, nminConductance);
 		} else {
 			xPulse = (conductanceGn- nminConductance) / (nmaxConductance - nminConductance) * maxNumLevelnLTP;
 			conductanceNewGn = (xPulse+numPulse) / maxNumLevelnLTP * (nmaxConductance - nminConductance) + nminConductance;
 		}
+				break;
 	} 
 	
 
 	
 	
-	else if (!positiveupdate && (deltaWeightNormalized <= 0)){	// - reverse update
-		
+			case 2: {	// - reverse update
+		updatecase=2;
 		if(deltaWeightNormalized == 0)
 		uzc++;
 		else
 		{unc++;
 		 deltaWeightSign = 0;} // reverse update
 		GpGnCell = true;
-		deltaWeightNormalized = - learningrate[3]  * totalcondrange/pcondrange*deltaWeightNormalized/(maxWeight-minWeight);
+		deltaWeightNormalized = - learningrate[3]  * totalcondrange*param->cellnumber/pcondrange*deltaWeightNormalized/(maxWeight-minWeight);
 		deltaWeightSign = deltaWeightNormalized;
 		if(maxNumLevelpLTD==1)
 		deltaWeightNormalized =newtruncate(deltaWeightNormalized, maxNumLevelpLTD);
@@ -729,21 +832,22 @@ void RealDevice::newWrite(double deltaWeightNormalized, double weight, double mi
 			numPulse = maxNumLevelpLTD;
 		}
 		if (nonlinearWrite) {
-		        xPulse = InvNonlinearWeight(conductanceGp, maxNumLevelpLTD, paramAGpd, paramBGpd, pminConductance);
+		        xPulse = InvNonlinearWeight(conductanceGp[reversecellnumberGp], maxNumLevelpLTD, paramAGpd, paramBGpd, pminConductance);
 			conductanceNewGp = NonlinearWeight(xPulse-numPulse, maxNumLevelpLTP, paramAGpd, paramBGpd, pminConductance);
 		} else {
 			xPulse = (conductanceGp-pminConductance) / (pmaxConductance - pminConductance) * maxNumLevelpLTD;
 			conductanceNewGp = (xPulse - numPulse) / maxNumLevelpLTD * (pmaxConductance - pminConductance) + pminConductance;
 		}
 		
-		
+		break;
 	}
 	
-	else if (!positiveupdate && (deltaWeightNormalized > 0)){	// Gp normal update
+			case 3: {	// Gp normal update
+		updatecase=3;
 		deltaWeightSign = deltaWeightNormalized;
 		upc++;
 		GpGnCell = true;
-		deltaWeightNormalized = learningrate[0]  * totalcondrange/pcondrange*deltaWeightNormalized/(maxWeight-minWeight);
+		deltaWeightNormalized = learningrate[0]  * totalcondrange*param->cellnumber/pcondrange*deltaWeightNormalized/(maxWeight-minWeight);
 		deltaWeightSign = deltaWeightNormalized;
 		deltaWeightNormalized = truncate(deltaWeightNormalized, maxNumLevelpLTP);
 		numPulse = deltaWeightNormalized * maxNumLevelpLTP;
@@ -752,13 +856,15 @@ void RealDevice::newWrite(double deltaWeightNormalized, double weight, double mi
 			numPulse = maxNumLevelpLTP;
 		}
 		if (nonlinearWrite) {
-			xPulse = InvNonlinearWeight(conductanceGp, maxNumLevelpLTP, paramAGp, paramBGp, pminConductance);
+			xPulse = InvNonlinearWeight(conductanceGp[currentcellnumber], maxNumLevelpLTP, paramAGp, paramBGp, pminConductance);
 			conductanceNewGp = NonlinearWeight(xPulse+numPulse, maxNumLevelpLTP, paramAGp, paramBGp, pminConductance);
 		} else {
 			xPulse = (conductanceGp - pminConductance) / (pmaxConductance - pminConductance) * maxNumLevelpLTP;
 			conductanceNewGp = (xPulse+numPulse) / maxNumLevelpLTP * (pmaxConductance - pminConductance) + pminConductance;
 		}
+				break;
 	}
+		}
 	
 	
 	
@@ -826,10 +932,31 @@ void RealDevice::newWrite(double deltaWeightNormalized, double weight, double mi
 	}
 	
 	conductancePrev = conductance;
-	conductanceGp = conductanceNewGp;
-	conductanceGn = conductanceNewGn;
-	conductanceNew = conductanceNewGp - conductanceNewGn + refConductance;
-	conductance = conductanceNew;
+	switch (updatecase) {
+		case 0: 	
+	
+	conductanceGn[reversecellnumberGn] = conductanceNewGn;
+			break;
+		case 1:
+        conductanceGn[currentcellnumber] = conductanceNewGn;
+			break;
+		case 2:
+        conductanceGp[reversecellnumberGp] = conductanceNewGp;
+			break;
+		case 3:
+        conductanceGp[currentcellnumber] = conductanceNewGp;
+			break;
+			
+	}
+
+
+for (int i=0; i<param->cellnumber; i++){
+	conductance += conductanceGp[i] - conductanceGn[i] + refConductance;	// Current conductance (S) (dynamic variable)
+	}
+		
+		/* update multicellcounter */
+		multicellcounter++;
+
 }
 
 
