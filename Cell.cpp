@@ -718,7 +718,7 @@ void RealDevice::newWrite(double deltaWeightNormalized, double weight, double mi
 	if (positiveupdate && (deltaWeightNormalized > 0)){ updatecase =0;}
 		else if (positiveupdate && (deltaWeightNormalized <= 0)) { updatecase =1;}
 			else if (!positiveupdate && (deltaWeightNormalized <= 0)) { updatecase =2;}
-				else if (!positiveupdate && (deltaWeightNormalized > 0)) { updatecase =3;}
+				else { updatecase =3;}
 	
 	double conductanceNewGp = 0;
 	double conductanceNewGn = 0;
@@ -960,8 +960,8 @@ for (int i=0; i<param->cellnumber; i++){
 
 void RealDevice::Erase() {
 for (int i=0; i<param->cellnumber; i++){
-	conductanceGp[i]=0;	// Current conductance (S) (dynamic variable)
-	conductanceGn[i]=0;
+	this->conductanceGp[i]=0;	// Current conductance (S) (dynamic variable)
+	this->conductanceGn[i]=0;
 	}
 }
 
