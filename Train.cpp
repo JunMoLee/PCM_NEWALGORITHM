@@ -2142,7 +2142,7 @@ double s2[param->nOutput];  // Output delta from hidden layer to the output laye
         
 	
 		
-	if(param->weighttrack==1){
+	/* if(param->weighttrack==1){
                                    	
              												
 		for (int m=0; m<param->nHide; m++) {
@@ -2197,7 +2197,7 @@ double s2[param->nOutput];  // Output delta from hidden layer to the output laye
 		}
 		
 
-	} // end of weight tracking code
+	} // end of weight tracking code */
 	
 
 	
