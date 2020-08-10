@@ -197,58 +197,13 @@ void Array::WriteCell(int x, int y, double deltaWeight, double weight, double ma
         else 
         {	// Preparation stage (ideal write)
             //printf("initialize the conductance\n");
-			
-		        double avgMaxConductance = static_cast<eNVM*>(cell[x][y])->avgMaxConductance;
-			double avgMinConductance = static_cast<eNVM*>(cell[x][y])->avgMinConductance;
-			double pmaxConductance = static_cast<eNVM*>(cell[x][y])->pmaxConductance;
-			double pminConductance = static_cast<eNVM*>(cell[x][y])->pminConductance;
-		        double nmaxConductance = static_cast<eNVM*>(cell[x][y])->nmaxConductance;
-			double nminConductance = static_cast<eNVM*>(cell[x][y])->nminConductance;
-			double conductanceGp = static_cast<eNVM*>(cell[x][y])->conductanceGp;
-			double conductanceGn = static_cast<eNVM*>(cell[x][y])->conductanceGn;
-		        double refConductance= static_cast<eNVM*>(cell[x][y])->refConductance;
-			double totalcondrange = pmaxConductance + nmaxConductance - pminConductance - nminConductance;
-	                double pcondrange = pmaxConductance - pminConductance;
-	                double ncondrange = nmaxConductance - nminConductance;
-		        double conductance = 0;
-		        
-		        
-		      
-            // ? should add "+minConductance"?
-			//deltaWeight = 2 * deltaWeight;
-			if (deltaWeight > 0) {
-			conductanceGp += deltaWeight * (pmaxConductance - pminConductance);
-				
-				if (conductanceGp > pmaxConductance)
-				{
-					conductanceGp = pmaxConductance;
-				}
-				else if (conductanceGp < pminConductance)
-				{
-					conductanceGp = pminConductance;
-				}
-			}
-			else {
-				
-			conductanceGn -= deltaWeight * (nmaxConductance - nminConductance);
-				
-				if (conductanceGn > nmaxConductance)
-				{
-					conductanceGn =nmaxConductance;
-				}
-				else if (conductanceGn < nminConductance)
-				{
-					conductanceGn = nminConductance;
-				}
-			}
-		
-		
-			conductance = conductanceGp - conductanceGn + refConductance;
-			static_cast<eNVM*>(cell[x][y])->conductanceGp = conductanceGp;
-			static_cast<eNVM*>(cell[x][y])->conductanceGn = conductanceGn;
-			static_cast<eNVM*>(cell[x][y])->conductance = conductance;
 
-		}
+			static_cast<RealDevice*>(cell[x][y])->EraseCell(col, row);
+        
+
+   
+                        static_cast<RealDevice*>(cell[x][y])->InitializeCell(deltaweight);
+	
 	}
     else    // SRAM or digital eNVM
     { 
