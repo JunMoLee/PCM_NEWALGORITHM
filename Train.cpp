@@ -870,8 +870,8 @@ double s2[param->nOutput];  // Output delta from hidden layer to the output laye
 						              negstopreverse=0;
 				}
 				                           // limit reset under certain conductance condition
-			        double conductanceGpIH = static_cast<AnalogNVM*>(arrayIH->cell[jj][k])->conductanceGp;
-				double conductanceGnIH = static_cast<AnalogNVM*>(arrayIH->cell[jj][k])->conductanceGn;
+			        double conductanceGpIH = static_cast<AnalogNVM*>(arrayIH->cell[jj][k])->conductanceGptotal;
+				double conductanceGnIH = static_cast<AnalogNVM*>(arrayIH->cell[jj][k])->conductanceGntotal;
 			if(param->usesplit==1){	  if( (0<conductanceGpIH) && (conductanceGpIH<conductancepieceIH) )
 							   {negstopreverse=1;}
 							   
@@ -1607,8 +1607,8 @@ double s2[param->nOutput];  // Output delta from hidden layer to the output laye
 						              negstopreverse=0;
 				}
 				                          // limit reset under certain conductance condition
-				double conductanceGpHO = static_cast<AnalogNVM*>(arrayHO->cell[jj][k])->conductanceGp;
-				double conductanceGnHO = static_cast<AnalogNVM*>(arrayHO->cell[jj][k])->conductanceGn;
+				double conductanceGpHO = static_cast<AnalogNVM*>(arrayHO->cell[jj][k])->conductanceGptotal;
+				double conductanceGnHO = static_cast<AnalogNVM*>(arrayHO->cell[jj][k])->conductanceGntotal;
 							if(param->usesplit==1){	  if( (0<conductanceGpHO) && (conductanceGpHO<conductancepieceHO) )
 							   {negstopreverse=1;}
 							   
