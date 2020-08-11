@@ -582,16 +582,16 @@ double s2[param->nOutput];  // Output delta from hidden layer to the output laye
 				
                             // verify lowest Gp or probabilitstically deternmine cell to reset//
 			    
-			    int reset=0;
+			    int reset1=0;
 		            random_device rd;
 			    mt19937 gen(rd());
-			    uniform_int_distribution<int> dis(0,param->IHprob);
-			 if(dis(gen)==0) reset=1; 
+			    uniform_int_distribution<int> dis(0,param->posIHprob);
+			 if(dis(gen)==0) reset1=1; 
 				
 			   int reset2=0;
 		            random_device rd1;
 			    mt19937 gen1(rd1());
-			    uniform_int_distribution<int> dis1(0,param->specialprob);
+			    uniform_int_distribution<int> dis1(0,param->negIHprob);
 			   if(dis1(gen1)==0) reset2=1; 
 			    
 			 /*   if((dynamic_cast<AnalogNVM*>(arrayIH->cell[jj][k])->dd==counteradaptIH) || (dynamic_cast<AnalogNVM*>(arrayIH->cell[jj][k])->dd==(counteradaptIH + 1)))
@@ -676,7 +676,7 @@ double s2[param->nOutput];  // Output delta from hidden layer to the output laye
 							      learningrateIH[3] = param->learningrate[0][3];
 							      }
 								               // reset stopreverse
-								      if((a1[activationindex]>=0)&&(reset==1)){
+								      if((a1[activationindex]>=0)&&(reset1==1)){
 						              posstopreverse=0;
 						              negstopreverse=1;}
 								      else{
@@ -706,7 +706,7 @@ double s2[param->nOutput];  // Output delta from hidden layer to the output laye
 							      learningrateIH[3] = param->learningrate[0][3];
 							      }
 								               // reset stopreverse
-								      if((a1[activationindex]>=0)&&(reset==1)){
+								      if((a1[activationindex]>=0)&&(reset1==1)){
 						              posstopreverse=0;
 						              negstopreverse=1;}
 								      else{
@@ -738,7 +738,7 @@ double s2[param->nOutput];  // Output delta from hidden layer to the output laye
 							      learningrateIH[3] = param->learningrate[0][3];
 							      }
 								               // reset stopreverse
-								      if((a1[activationindex]>=param->minusactivationlimit)&&(reset==1)){
+								      if((a1[activationindex]>=param->minusactivationlimit)&&(reset2==1)){
 						              posstopreverse=1;
 						              negstopreverse=0;}
 								      else{
@@ -768,7 +768,7 @@ double s2[param->nOutput];  // Output delta from hidden layer to the output laye
 							      learningrateIH[3] = param->learningrate[0][3];
 							      }
 								               // reset stopreverse
-								      if((a1[activationindex]>=0)&&(reset==1)){
+								      if((a1[activationindex]>=0)&&(reset2==1)){
 						              posstopreverse=1;
 						              negstopreverse=0;}
 								      else{
@@ -800,7 +800,7 @@ double s2[param->nOutput];  // Output delta from hidden layer to the output laye
 							      learningrateIH[3] = param->learningrate[0][3];
 							      }
 								               // reset stopreverse
-								      if((a1[activationindex]>=param->minusactivationlimit)&&(reset==1)){
+								      if((a1[activationindex]>=param->minusactivationlimit)&&(reset2==1)){
 						              posstopreverse=1;
 						              negstopreverse=0;}
 								      else{
@@ -831,7 +831,7 @@ double s2[param->nOutput];  // Output delta from hidden layer to the output laye
 							      learningrateIH[3] = param->learningrate[0][3];
 							      }
 								               // reset stopreverse
-										      if((a1[activationindex]>=0)&&(reset2==1)){
+										      if((a1[activationindex]>=0)&&(reset1==1)){
 						              posstopreverse=0;
 						              negstopreverse=1;}
 								      else{
@@ -1290,14 +1290,14 @@ double s2[param->nOutput];  // Output delta from hidden layer to the output laye
                                 maxWeightUpdated =fabs(deltaWeight2[jj][k]);
                             }
                         */		
-		            int reset=0;
+		            int reset1=0;
 			/*   if((dynamic_cast<AnalogNVM*>(arrayHO->cell[jj][k])->dd==(counteradaptHO)) || (dynamic_cast<AnalogNVM*>(arrayHO->cell[jj][k])->dd==(counteradaptHO+1)))
 			    {reset=1;} */
 			    
 			  random_device rd;
 			    mt19937 gen(rd());
-			    uniform_int_distribution<int> dis(0,param->HOprob);
-			   if(dis(gen)==0) reset=1; 
+			    uniform_int_distribution<int> dis(0,param->posHOprob);
+			   if(dis(gen)==0) reset1=1; 
 				
 					            int reset2=0;
 			/*   if((dynamic_cast<AnalogNVM*>(arrayHO->cell[jj][k])->dd==(counteradaptHO)) || (dynamic_cast<AnalogNVM*>(arrayHO->cell[jj][k])->dd==(counteradaptHO+1)))
@@ -1305,7 +1305,7 @@ double s2[param->nOutput];  // Output delta from hidden layer to the output laye
 			    
 			  random_device rd1;
 			    mt19937 gen1(rd1());
-			    uniform_int_distribution<int> dis1(0,param->specialprob);
+			    uniform_int_distribution<int> dis1(0,param->negHOprob);
 			 if(dis1(gen1)==0) reset2=1; 
 				
 			/*   int adaptivegradient=0;
@@ -1407,7 +1407,7 @@ double s2[param->nOutput];  // Output delta from hidden layer to the output laye
 							      learningrateHO[3] = param->learningrate[0][3];
 							      }
 								               // reset stopreverse
-							if((reset==1) && (a2[activationindex]>=0)){
+							if((reset1==1) && (a2[activationindex]>=0)){
 						              posstopreverse=0;
 						              negstopreverse=1;}
 								      else{
@@ -1435,7 +1435,7 @@ double s2[param->nOutput];  // Output delta from hidden layer to the output laye
 							      learningrateHO[3] = param->learningrate[0][3];
 							      }
 								               // reset stopreverse
-							if((reset==1) && (a2[activationindex]>=0)){
+							if((reset1==1) && (a2[activationindex]>=0)){
 						              posstopreverse=0;
 						              negstopreverse=1;}
 								      else{
@@ -1466,7 +1466,7 @@ double s2[param->nOutput];  // Output delta from hidden layer to the output laye
 							      learningrateHO[3] = param->learningrate[0][3];
 							      }
 								               // reset stopreverse
-							if((reset==1) && (a2[activationindex]>=param->minusactivationlimit)){
+							if((reset2==1) && (a2[activationindex]>=param->minusactivationlimit)){
 						              posstopreverse=1;
 						              negstopreverse=0;}
 								      else{
@@ -1494,7 +1494,7 @@ double s2[param->nOutput];  // Output delta from hidden layer to the output laye
 							      learningrateHO[3] = param->learningrate[0][3];
 							      }
 								               // reset stopreverse
-							if((reset==1) && (a2[activationindex]>=0)){
+							if((reset2==1) && (a2[activationindex]>=0)){
 						              posstopreverse=1;
 						              negstopreverse=0;}
 								      else{
@@ -1525,7 +1525,7 @@ double s2[param->nOutput];  // Output delta from hidden layer to the output laye
 							      learningrateHO[3] = param->learningrate[0][3];
 							      }
 								               // reset stopreverse
-							if((reset==1) && (a2[activationindex]>=param->minusactivationlimit)){
+							if((reset2==1) && (a2[activationindex]>=param->minusactivationlimit)){
 						              posstopreverse=1;
 						              negstopreverse=0;}
 								      else{
@@ -1556,7 +1556,7 @@ double s2[param->nOutput];  // Output delta from hidden layer to the output laye
 							      learningrateHO[3] = param->learningrate[0][3];
 							      }
 								               // reset stopreverse
-						             if((a2[activationindex]>=0)&&(reset2==1)){
+						             if((a2[activationindex]>=0)&&(reset1==1)){
 						              posstopreverse=0;
 						              negstopreverse=1;}
 								      else{
