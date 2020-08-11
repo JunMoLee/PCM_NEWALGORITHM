@@ -164,6 +164,10 @@ double s2[param->nOutput];  // Output delta from hidden layer to the output laye
 	                       double adaptivemomentum = param -> adaptivemomentum;
 	                       double adaptiveratio = param -> adaptiveratio;
 	                       int learningratesplit = param -> learningratesplit;
+	                       double conductancepieceIH =  maxconrangeIH / (param-> learningratesplit);
+	                       double conductancepieceHO =  maxconrangeHO / (param-> learningratesplit); 
+	                       int areasizeIH = kernel * kernel * hiddenpiece;
+	                       int areasizeHO = hhiddenpiece * outputpiece;
 	
 		     
 	for (int t = 0; t < epochs; t++) {
