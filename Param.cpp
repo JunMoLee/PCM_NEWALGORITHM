@@ -79,25 +79,25 @@ for (int r=0; r<100; r++){
 	
 	/* Weight track variables */
 	weighttrack=0;
-	TrackRate=150;
+	TrackRate=50;
 	useprob=1;
-	posIHprob=8;
-	negIHprob=2;
-	posHOprob=8;
-	negHOprob=2;
-	minusactivationlimit = 10^-4;
+	posIHprob=11;
+	negIHprob=3;
+	posHOprob=11;
+	negHOprob=3;
+	minusactivationlimit =0;
 	use1313=1;
 	use1212=0;
 	use3131=1;
 	use3232=0;
 	use1111=1;
 	use3333=1;
-	destructiveratio1313=1.2;
-	destructiveratio1212=1.2;
-	destructiveratio3131=1.2;
-	destructiveratio3232=1.2;
-	destructiveratio1111=1.2;
-	destructiveratio3333=1.2;
+	destructiveratio1313=1;
+	destructiveratio1212=1;
+	destructiveratio3131=1;
+	destructiveratio3232=1;
+	destructiveratio1111=1;
+	destructiveratio3333=1;
 	specialprob=2;
 	
 	const int // allocate lrs(learning rate split)
@@ -206,14 +206,13 @@ for (int r=0; r<100; r++){
 	frr=1000;
 	RefreshRate = frr;
 	const int 
-	nur=150;
+	nur=50;
 	const int 
 	rnur=1;
 	const int
-	nurn=150;
+	nurn=50;
 	newUpdateRate = nur; // rate of new update algorithm implementation (per # of images)
-	nnewUpdateRate =nurn;
-	cellnumber=1;
+	nnewUpdateR3;
 const int
 a=0;
 	
