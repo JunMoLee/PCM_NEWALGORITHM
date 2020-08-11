@@ -132,6 +132,7 @@ public:
 	
 	bool useLTD;  // using LTD curve if true
 	int useprob=0;
+	int usetrack=0;
 	int posIHprob=0;
 	int negIHprob=0;
 	int posHOprob=0;
