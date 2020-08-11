@@ -85,8 +85,8 @@ public:
 	double conductance=0;	// Current conductance (S) (Dynamic variable) at on-chip Vr (different than the Vr in the reported measurement data)
 	vector <double> conductanceGp;
 	vector <double> conductanceGn;        
-	double conductanceGptotal;
-	double conductanceGntotal;
+	double conductanceGptotal=0;
+	double conductanceGntotal=0;
 	double pminConductance=0;
 	double pmaxConductance=0;
 	double nminConductance=0;
