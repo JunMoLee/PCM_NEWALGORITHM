@@ -136,7 +136,24 @@ public:
 	int HOprob=0;
 	int specialprob;
 	double minusactivationlimit;
-	double destructiveratio;
+	int use1313;
+	int use1212;
+	int use3131;
+	int use3232;
+	int use1111;
+	int use3333;
+	double destructiveratio1313;
+	double destructiveratio1212;
+	double destructiveratio3131;
+	double destructiveratio3232;
+	double destructiveratio1111;
+	double destructiveratio3333;
+	
+	
+	
+	
+	
+	
 	int FullRefresh;    // use refresh if true
 	int ReverseUpdate;  // use reverse update if true
 	int TrackRate;
