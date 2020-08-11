@@ -151,7 +151,10 @@ public:
 	double destructiveratio1111;
 	double destructiveratio3333;
 	
-	
+	double learningratesplit;
+	double adaptiveratio;
+	double adaptivemomentum;
+	int usesplit =1;
 	
 	
 	
