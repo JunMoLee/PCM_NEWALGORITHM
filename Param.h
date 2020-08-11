@@ -132,8 +132,10 @@ public:
 	
 	bool useLTD;  // using LTD curve if true
 	int useprob=0;
-	int IHprob=0;
-	int HOprob=0;
+	int posIHprob=0;
+	int negIHprob=0;
+	int posHOprob=0;
+	int negHOprob=0;
 	int specialprob;
 	double minusactivationlimit;
 	int use1313;
