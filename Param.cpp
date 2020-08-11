@@ -84,7 +84,18 @@ for (int r=0; r<100; r++){
 	IHprob=9;
 	HOprob=9;
 	minusactivationlimit = 10^-4;
-	destructiveratio = 1.2;
+	use1313=1;
+	use1212=0;
+	use3131=1;
+	use3232=0;
+	use1111=1;
+	use3333=1;
+	destructiveratio1313=1.2;
+	destructiveratio1212=1.2;
+	destructiveratio3131=1.2;
+	destructiveratio3232=1.2;
+	destructiveratio1111=1.2;
+	destructiveratio3333=1.2;
 	specialprob=2;
 	
 	
