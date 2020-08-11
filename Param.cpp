@@ -212,7 +212,7 @@ for (int r=0; r<100; r++){
 	const int
 	nurn=50;
 	newUpdateRate = nur; // rate of new update algorithm implementation (per # of images)
-	nnewUpdateR3;
+	nnewUpdateRate = nurn;
 const int
 a=0;
 	
