@@ -684,7 +684,7 @@ double s2[param->nOutput];  // Output delta from hidden layer to the output laye
 						              negstopreverse=1;}
 							      
 							      }
-							   /*   else if((updatepattern[areanum][0]*1000+updatepattern[areanum][1]*100+updatepattern[areanum][2]*10+updatepattern[areanum][3] == 1212))
+							     else if((updatepattern[areanum][0]*1000+updatepattern[areanum][1]*100+updatepattern[areanum][2]*10+updatepattern[areanum][3] == 1212))
 							      {
 								      
 							      if(((batchSize+numTrain*(epochcount-1)) % (int)(param->newUpdateRate/adNur))*param->ReverseUpdate==((int)(param->newUpdateRate/adNur-1))){
@@ -713,7 +713,7 @@ double s2[param->nOutput];  // Output delta from hidden layer to the output laye
 							      posstopreverse=1;
 						              negstopreverse=1;}
 							      
-							      } */
+							      } 
 								   // 3131
 								   
 								    else if((updatepattern[areanum][0]*1000+updatepattern[areanum][1]*100+updatepattern[areanum][2]*10+updatepattern[areanum][3])*param->use3131 == 3131)
@@ -1579,11 +1579,11 @@ double s2[param->nOutput];  // Output delta from hidden layer to the output laye
 							   }
 				 }
 				else {
-					  learningrateHO[0] = param->learningrate[0][0];
+					                      learningrateHO[0] = param->learningrate[0][0];
 							      learningrateHO[1] = param->learningrate[0][1];
 							      learningrateHO[2] = param->learningrate[0][2];
 							      learningrateHO[3] = param->learningrate[0][3];
-					      posstopreverse=0;
+					                      posstopreverse=0;
 						              negstopreverse=0;
 				}
 				                          // reset weightupdatepattern
