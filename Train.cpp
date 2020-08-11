@@ -152,6 +152,7 @@ double s2[param->nOutput];  // Output delta from hidden layer to the output laye
 			       int kernel =  static_cast<AnalogNVM*>(arrayIH->cell[0][0])->kernel; 	
 		               int h = static_cast<AnalogNVM*>(arrayIH->cell[0][0])->h; 
 	                       int hiddenpiece = static_cast<AnalogNVM*>(arrayIH->cell[0][0])->hiddenpiece; 
+	 int outputpiece = param->nOutput / (static_cast<AnalogNVM*>(arrayIH->cell[0][0])->os); 
 		               int hh = static_cast<AnalogNVM*>(arrayIH->cell[0][0])->hh; 
 	                       int hhiddenpiece = static_cast<AnalogNVM*>(arrayIH->cell[0][0])->hhiddenpiece; 
 		               int os = static_cast<AnalogNVM*>(arrayIH->cell[0][0])->os;
