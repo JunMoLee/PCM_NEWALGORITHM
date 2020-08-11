@@ -153,7 +153,7 @@ double s2[param->nOutput];  // Output delta from hidden layer to the output laye
 		               int h = static_cast<AnalogNVM*>(arrayIH->cell[0][0])->h; 
 	                       int hiddenpiece = static_cast<AnalogNVM*>(arrayIH->cell[0][0])->hiddenpiece; 
 		               int hh = static_cast<AnalogNVM*>(arrayIH->cell[0][0])->hh; 
-	   int hhiddenpiece = static_cast<AnalogNVM*>(arrayIH->cell[0][0])->hhiddenpiece; 
+	                       int hhiddenpiece = static_cast<AnalogNVM*>(arrayIH->cell[0][0])->hhiddenpiece; 
 		               int os = static_cast<AnalogNVM*>(arrayIH->cell[0][0])->os;
                                int counteradaptIH =0;
                                int counteradaptHO =0;
@@ -161,6 +161,9 @@ double s2[param->nOutput];  // Output delta from hidden layer to the output laye
 	                       int maxcounterHO = param->nOutput/os;
 	                       int maxallocationmethodIH = kernel-1;
                                int maxallocationmethodHO = param->nHide/hh-1;
+	                       double adaptivemomentum = param -> adaptivemomentum;
+	                       double adaptiveratio = param -> adaptiveratio;
+	                       int learningratesplit = param -> learningratesplit;
 	
 		     
 	for (int t = 0; t < epochs; t++) {
@@ -862,7 +865,20 @@ double s2[param->nOutput];  // Output delta from hidden layer to the output laye
 					                        posstopreverse=0;
 						              negstopreverse=0;
 				}
-				                           // reset weightupdatepattern
+				                           // limit reset under certain conductance condition
+			        double conductanceGpIH = static_cast<AnalogNVM*>(arrayIH->cell[jj][k])->conductanceGp;
+				double conductanceGnIH = static_cast<AnalogNVM*>(arrayIH->cell[jj][k])->conductanceGn;
+			if(param->usesplit==1){	  if( (0<conductanceGpIH) && (conductanceGpIH<conductancepieceIH) )
+							   {negstopreverse=1;}
+							   
+							  
+				
+							
+					            if( (0<conductanceGnIH) && (conductanceGnIH<conductancepieceIH) )
+							   {posstopreverse=1;}
+							  
+								      }
+			
 				                                
 				                
 							/*       for (int o=0; o<220; o++) {
@@ -1586,7 +1602,19 @@ double s2[param->nOutput];  // Output delta from hidden layer to the output laye
 					                      posstopreverse=0;
 						              negstopreverse=0;
 				}
-				                          // reset weightupdatepattern
+				                          // limit reset under certain conductance condition
+				double conductanceGpHO = static_cast<AnalogNVM*>(arrayHO->cell[jj][k])->conductanceGp;
+				double conductanceGnHO = static_cast<AnalogNVM*>(arrayHO->cell[jj][k])->conductanceGn;
+							if(param->usesplit==1){	  if( (0<conductanceGpHO) && (conductanceGpHO<conductancepieceHO) )
+							   {negstopreverse=1;}
+							   
+							  
+				
+							
+					            if( (0<conductanceGnHO) && (conductanceGnHO<conductancepieceHO) )
+							   {posstopreverse=1;}
+							  
+								      }
 				                                
 			
 							    /*   for (int o=0; o<220; o++) {
