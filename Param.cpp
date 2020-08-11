@@ -100,7 +100,16 @@ for (int r=0; r<100; r++){
 	destructiveratio3333=1.2;
 	specialprob=2;
 	
-	
+	const int // allocate lrs(learning rate split)
+	lrs=3;
+	const double // allocate ar(adaptive ratio)
+	ar=1.1;
+	const double // allocate am(adaptive momentum)
+	am=10012;
+	learningratesplit = lrs;
+	adaptiveratio =pow(am/10000,(lrs-1)/2);
+	adaptivemomentum = am/10000;
+	usesplit = 1;
 	
 	
 	/* Algorithm parameters */
