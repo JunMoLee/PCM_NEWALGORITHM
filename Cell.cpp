@@ -397,7 +397,10 @@ RealDevice::RealDevice(int x, int y, double p, double n, int l) {
 	}
 	for (int i=0; i<param->cellnumber; i++){
 	conductance += conductanceGp[i] - conductanceGn[i] + refConductance;	// Current conductance (S) (dynamic variable)
+		conductanceGptotal+= conductanceGp[i];
+		conductanceGntotal+= conductanceGn[i];
 	}
+	
 	conductancePrev = conductance;	// Previous conductance (S) (dynamic variable)
 	readVoltage = 0.5;	// On-chip read voltage (Vr) (V)
 	readPulseWidth = 5e-9;	// Read pulse width (s) (will be determined by ADC)
@@ -565,6 +568,13 @@ void RealDevice::InitialWrite (double deltaweight){
 		conductanceGn[cellindex] = deltaweightcondscale;
 	  }
 	
+		for (int i=0; i<param->cellnumber; i++){
+	conductance += conductanceGp[i] - conductanceGn[i] + refConductance;	// Current conductance (S) (dynamic variable)
+		conductanceGptotal+= conductanceGp[i];
+		conductanceGntotal+= conductanceGn[i];
+	}
+	
+	
 }
 
 
@@ -688,10 +698,14 @@ void RealDevice::Write(double deltaWeightNormalized, double weight, double minWe
 	}
 	
 	conductance=0;
+	conductanceGptotal=0;
+	conductanceGntotal=0;
 	conductanceGp[currentcellnumber] = conductanceNewGp;
 	conductanceGn[currentcellnumber] = conductanceNewGn;
 	for (int i=0; i<param->cellnumber; i++){
 	conductance += conductanceGp[i] - conductanceGn[i] + refConductance;	// Current conductance (S) (dynamic variable)
+		conductanceGptotal+= conductanceGp[i];
+		conductanceGntotal+= conductanceGn[i];
 	}
 	
 	/* update multicellcounter */
@@ -945,8 +959,12 @@ void RealDevice::newWrite(double deltaWeightNormalized, double weight, double mi
 	}
 
 conductance =0;
-for (int i=0; i<param->cellnumber; i++){
+	conductanceGptotal =0;
+	conductanceGntotal =0;
+	for (int i=0; i<param->cellnumber; i++){
 	conductance += conductanceGp[i] - conductanceGn[i] + refConductance;	// Current conductance (S) (dynamic variable)
+		conductanceGptotal+= conductanceGp[i];
+		conductanceGntotal+= conductanceGn[i];
 	}
 		
 		/* update multicellcounter */
