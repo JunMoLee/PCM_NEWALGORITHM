@@ -910,7 +910,7 @@ double s2[param->nOutput];  // Output delta from hidden layer to the output laye
 				
                                 double conductanceGpIH = static_cast<AnalogNVM*>(arrayIH->cell[jj][k])->conductanceGptotal;
 				double conductanceGnIH = static_cast<AnalogNVM*>(arrayIH->cell[jj][k])->conductanceGntotal;
-			        if(param->usesplit==1){	  if( (0<conductanceGpIH) && (conductanceGpIH<conductancepieceIH) )
+			        if(param->usesplit){	  if( (0<conductanceGpIH) && (conductanceGpIH<conductancepieceIH) )
 							   {negstopreverse=1;}
 							   
 							  
@@ -1628,7 +1628,8 @@ double s2[param->nOutput];  // Output delta from hidden layer to the output laye
 				
 				double conductanceGpHO = static_cast<AnalogNVM*>(arrayHO->cell[jj][k])->conductanceGptotal;
 				double conductanceGnHO = static_cast<AnalogNVM*>(arrayHO->cell[jj][k])->conductanceGntotal;
-							if(param->usesplit==1){	  if( (0<conductanceGpHO) && (conductanceGpHO<conductancepieceHO) )
+							if(param->usesplit){	  if( (0<conductanceGpHO) && (conductanceGpHO<conductancepieceHO) )
+								cout<<"why"<<endl;
 							   {negstopreverse=1;}
 							   
 							  
