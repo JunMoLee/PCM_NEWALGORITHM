@@ -917,7 +917,7 @@ double s2[param->nOutput];  // Output delta from hidden layer to the output laye
 							  /* new update */
 								
  if (param->ReverseUpdate){ // start of if
-	  double conductanceGpIH = static_cast<AnalogNVM*>(arrayIH->cell[jj][k])->conductanceGptotal;
+	/*  double conductanceGpIH = static_cast<AnalogNVM*>(arrayIH->cell[jj][k])->conductanceGptotal;
 				double conductanceGnIH = static_cast<AnalogNVM*>(arrayIH->cell[jj][k])->conductanceGntotal;
 			        if(param->usesplit){	  if( (0<conductanceGpIH) && (conductanceGpIH<conductancepieceIH) )
 							   {negstopreverse=1;}
@@ -928,7 +928,7 @@ double s2[param->nOutput];  // Output delta from hidden layer to the output laye
 					            if( (0<conductanceGnIH) && (conductanceGnIH<conductancepieceIH) )
 							   {posstopreverse=1;}
 							  
-								      }
+								      } */
 								
 							    if ((int)(param->newUpdateRate/adNur)<(int)(param->nnewUpdateRate/adNur)){ // if + reverse update is faster than - reverse update
 
@@ -1636,7 +1636,7 @@ double s2[param->nOutput];  // Output delta from hidden layer to the output laye
 								
 							  if (param->ReverseUpdate){ // start of if
 								  
-								  double conductanceGpHO = static_cast<AnalogNVM*>(arrayHO->cell[jj][k])->conductanceGptotal;
+								/*  double conductanceGpHO = static_cast<AnalogNVM*>(arrayHO->cell[jj][k])->conductanceGptotal;
 				double conductanceGnHO = static_cast<AnalogNVM*>(arrayHO->cell[jj][k])->conductanceGntotal;
 							if(param->usesplit){	  if( (0<conductanceGpHO) && (conductanceGpHO<conductancepieceHO) )
 							
@@ -1648,7 +1648,7 @@ double s2[param->nOutput];  // Output delta from hidden layer to the output laye
 					            if( (0<conductanceGnHO) && (conductanceGnHO<conductancepieceHO) )
 							   {posstopreverse=1;}
 							  
-								      }
+								      } */
 									
 							    if ((int)(param->newUpdateRate/adNur)<(int)(param->nnewUpdateRate/adNur)){ // if + reverse update is faster than - reverse update
 
