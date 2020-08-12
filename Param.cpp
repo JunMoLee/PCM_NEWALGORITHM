@@ -92,12 +92,12 @@ for (int r=0; r<100; r++){
 	use3232=0;
 	use1111=1;
 	use3333=1;
-	destructiveratio1313=1;
-	destructiveratio1212=1;
-	destructiveratio3131=1;
-	destructiveratio3232=1;
-	destructiveratio1111=1;
-	destructiveratio3333=1;
+	destructiveratio1313=1.2;
+	destructiveratio1212=1.2;
+	destructiveratio3131=1.2;
+	destructiveratio3232=1.2;
+	destructiveratio1111=1.2;
+	destructiveratio3333=1.2;
 	specialprob=2;
 	
 	const int // allocate lrs(learning rate split)
@@ -110,7 +110,7 @@ for (int r=0; r<100; r++){
 	adaptiveratio =pow(am/10000,(lrs-1)/2);
 	adaptivemomentum = am/10000;
 	usesplit = 1;
-	usetrack = 0;
+	usetrack = 1;
 	
 	
 	
@@ -169,7 +169,7 @@ for (int r=0; r<100; r++){
 	cp=1;
 	cp=-1;
 	const int
-	dom=1;
+	dom=0;
 	dominance=dom;
 	maxWeight = 1;	// Upper bound of weight value
 	minWeight = -1;	// Lower bound of weight value
