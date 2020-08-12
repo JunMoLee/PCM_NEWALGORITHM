@@ -696,7 +696,7 @@ double s2[param->nOutput];  // Output delta from hidden layer to the output laye
 						              negstopreverse=1;}
 							      
 							      }
-							     else if((updatepattern[areanum][0]*1000+updatepattern[areanum][1]*100+updatepattern[areanum][2]*10+updatepattern[areanum][3] == 1212))
+							     else if((updatepattern[areanum][0]*1000+updatepattern[areanum][1]*100+updatepattern[areanum][2]*10+updatepattern[areanum][3])*param->use1212 == 1212)
 							      {
 								      
 							      if(((batchSize+numTrain*(epochcount-1)) % (int)(param->newUpdateRate/adNur))*param->ReverseUpdate==((int)(param->newUpdateRate/adNur-1))){
