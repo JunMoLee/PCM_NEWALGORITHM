@@ -170,7 +170,7 @@ double Array::ReadCell(int x, int y, char* mode) {
 }
 
 void Array::WriteCell(int x, int y, double deltaWeight, double weight, double maxWeight, double minWeight, 
-						bool regular /* False: ideal write, True: regular write considering device properties */, bool newupdate, bool PositiveUpdate, bool dominance, double learningrate []) {
+						bool regular /* False: ideal write, True: regular write considering device properties */, bool newupdate, bool PositiveUpdate, bool dominance, double learningrate [], int ignoreposreverse, int ignorenegreverse) {
 	bool positiveupdate=PositiveUpdate;
 	bool deltaweightsign = 0;
 	if (deltaWeight>0)
