@@ -175,6 +175,29 @@ int main() {
 	        int nnewUpdateRate= param->nnewUpdateRate;
 	        int dominance = param ->dominance;
 			
+			
+		int TrackRate=patam->TrackRate;
+		int usesplit = param->usesplit;
+	        int usetrack = param->usetrack;
+	        int useprob=param->useprob;
+	        int posIHprob=param->posIHprob;
+	        int negIHprob=param->negIHprob;
+	        int posHOprob=param->posHOprob;
+	        int negHOprob=param->negHOprob;
+	        double minusactivationlimit =param->minusactivationlimit;
+                int use1313=param->use1313;
+	       int use1212=param->use1212;
+	       int use3131=param->use3131;
+	         int use3232=param->use3232;
+	  	int use1111=param->use1111;
+          	int use3333=param->use3333;
+		double destructiveratio1313=param->destructiveratio1313;
+		double destructiveratio1212=param->destructiveratio1212;
+		double destructiveratio3131=param->destructiveratio3131;
+		double destructiveratio3232=param->destructiveratio3232;
+		double destructiveratio1111=param->destructiveratio1111;
+		double destructiveratio3333=param->destructiveratio3333;
+			
 	        double  pLA = param->learningrate[0][0]; // positive set Learning rate
 	        double nLA = param->learningrate[0][1]; // negative set Learning rate
 		double pLAd = param->learningrate[0][2]; // positive reset Learning rate
@@ -207,6 +230,7 @@ int main() {
 		 cout <<endl;
 		 cout << "default algorithm"<<endl;
 		 read <<"param->optimization_type"<<", "<<"NL_LTP_Gp"<<", "<<"NL_LTD_Gp"<<", "<<"NL_LTP_Gn"<<", "<<"NL_LTD_Gn"<<", "<<"kp"<<", "<<"kd"<<", "<<"knp"<<", "<<"knd"<<", "<<"pLA"<<", "<<"nLA"<<", "<<"pLAd"<<","<<"nLAd"<<", "<<"pof"<< ", " <<"nof"<< ", " <<"newUpdateRate"<<", "<<"nnewUpdateRate"<<", "<<"ReverseUpdate"<<", "<<"RefreshRate"<<", "<<"FullRefresh"<<", "<<"dominance"<<", "<<"wv"<<", "<<"epoch"<< ", "<<"accuracy" <<", "<<"average accuracy"<<", "<<"standard deviation"<< endl;
+		  read <<"usesplit"<<", "<<"usetrack"<<", "<<"useprob"<<", "<<"posIHprob"<<", "<<"negIHprob"<<", "<<"posHOprob"<<", "<<"negHOprob"<<", "<<"minusactivationlimit"<<", "<<"use1313"<<", "<<"use1212"<<", "<<"use3131"<<", "<<"use3232"<<", "<<"use1111"<<", "<<"use3333"<<", "<<"dr1313"<<", "<<"dr1212"<<", "<<"dr3131"<<", "<<"dr3232"<<", "<<"dr1111"<<", "<<"dr3333"<<endl;
 		}
 		cout <<endl;
 		 cout << "Training Epoch : " << i << endl; 	
@@ -548,14 +572,19 @@ cout<<"alpha1 "<< param->alpha1 <<" dalpha "<<param->dalpha<<" nalpha1 "<<param-
 		if(write_or_not){
                 if (i>=1 && i<=25)
 		read <<param->optimization_type<<", "<<NL_LTP_Gp<<", "<<NL_LTD_Gp<<", "<<NL_LTP_Gn<<", "<<NL_LTD_Gn<<", "<<kp<<", "<<kd<<", "<<knp<<", "<<knd<<", "<<pLA<<", "<<nLA<<", "<<pLAd<<","<<nLAd<<", "<<pof<< ", " <<nof<< ", " <<newUpdateRate<<", "<<nnewUpdateRate<<", "<<ReverseUpdate<<", "<<RefreshRate<<", "<<FullRefresh<<", "<<dominance<<", "<<wv<<", "<<i*param->interNumEpochs<< ", "<<(double)correct/param->numMnistTestImages*100 << ", "<<averagesum1/(i)<<", "<<sqrt(stdsum/(i))<< endl;
+		read <<usesplit<<", "<<usetrack<<", "<<useprob<<", "<<posIHprob<<", "<<negIHprob<<", "<<posHOprob<<", "<<negHOprob<<", "<<minusactivationlimit<<", "<<use1313<<", "<<use1212<<", "<<use3131<<", "<<use3232<<", "<<use1111<<", "<<use3333<<", "<<detructiveratio1313<<", "<<destructiveratio1212<<", "<<destructiveratio3131<<", "<<destructiveratio3232<<", "<<destructiveratio1111<<", "<<destructiveratio3333<<endl;
 		else if (i>=26 && i<=50)
 		read <<param->optimization_type<<", "<<NL_LTP_Gp<<", "<<NL_LTD_Gp<<", "<<NL_LTP_Gn<<", "<<NL_LTD_Gn<<", "<<kp<<", "<<kd<<", "<<knp<<", "<<knd<<", "<<pLA<<", "<<nLA<<", "<<pLAd<<","<<nLAd<<", "<<pof<< ", " <<nof<< ", " <<newUpdateRate<<", "<<nnewUpdateRate<<", "<<ReverseUpdate<<", "<<RefreshRate<<", "<<FullRefresh<<", "<<dominance<<", "<<wv<<", "<<i*param->interNumEpochs<< ", "<<(double)correct/param->numMnistTestImages*100 << ", "<<averagesum2/(i-25)<<", "<<sqrt(stdsum/(i-25))<< endl;
+				read <<usesplit<<", "<<usetrack<<", "<<useprob<<", "<<posIHprob<<", "<<negIHprob<<", "<<posHOprob<<", "<<negHOprob<<", "<<minusactivationlimit<<", "<<use1313<<", "<<use1212<<", "<<use3131<<", "<<use3232<<", "<<use1111<<", "<<use3333<<", "<<detructiveratio1313<<", "<<destructiveratio1212<<", "<<destructiveratio3131<<", "<<destructiveratio3232<<", "<<destructiveratio1111<<", "<<destructiveratio3333<<endl;
 		else if (i>=51 && i<=75)
 		read <<param->optimization_type<<", "<<NL_LTP_Gp<<", "<<NL_LTD_Gp<<", "<<NL_LTP_Gn<<", "<<NL_LTD_Gn<<", "<<kp<<", "<<kd<<", "<<knp<<", "<<knd<<", "<<pLA<<", "<<nLA<<", "<<pLAd<<","<<nLAd<<", "<<pof<< ", " <<nof<< ", " <<newUpdateRate<<", "<<nnewUpdateRate<<", "<<ReverseUpdate<<", "<<RefreshRate<<", "<<FullRefresh<<", "<<dominance<<", "<<wv<<", "<<i*param->interNumEpochs<< ", "<<(double)correct/param->numMnistTestImages*100 << ", "<<averagesum3/(i-50)<<", "<<sqrt(stdsum/(i-50))<< endl;
+					read <<usesplit<<", "<<usetrack<<", "<<useprob<<", "<<posIHprob<<", "<<negIHprob<<", "<<posHOprob<<", "<<negHOprob<<", "<<minusactivationlimit<<", "<<use1313<<", "<<use1212<<", "<<use3131<<", "<<use3232<<", "<<use1111<<", "<<use3333<<", "<<detructiveratio1313<<", "<<destructiveratio1212<<", "<<destructiveratio3131<<", "<<destructiveratio3232<<", "<<destructiveratio1111<<", "<<destructiveratio3333<<endl;
 		else if (i>=76 && i<=100)
-		read <<param->optimization_type<<", "<<NL_LTP_Gp<<", "<<NL_LTD_Gp<<", "<<NL_LTP_Gn<<", "<<NL_LTD_Gn<<", "<<kp<<", "<<kd<<", "<<knp<<", "<<knd<<", "<<pLA<<", "<<nLA<<", "<<pLAd<<","<<nLAd<<", "<<pof<< ", " <<nof<< ", " <<newUpdateRate<<", "<<nnewUpdateRate<<", "<<ReverseUpdate<<", "<<RefreshRate<<", "<<FullRefresh<<", "<<dominance<<", "<<wv<<", "<<i*param->interNumEpochs<< ", "<<(double)correct/param->numMnistTestImages*100 << ", "<<averagesum4/(i-75)<<", "<<sqrt(stdsum/(i-75))<< endl;	
+		read <<param->optimization_type<<", "<<NL_LTP_Gp<<", "<<NL_LTD_Gp<<", "<<NL_LTP_Gn<<", "<<NL_LTD_Gn<<", "<<kp<<", "<<kd<<", "<<knp<<", "<<knd<<", "<<pLA<<", "<<nLA<<", "<<pLAd<<","<<nLAd<<", "<<pof<< ", " <<nof<< ", " <<newUpdateRate<<", "<<nnewUpdateRate<<", "<<ReverseUpdate<<", "<<RefreshRate<<", "<<FullRefresh<<", "<<dominance<<", "<<wv<<", "<<i*param->interNumEpochs<< ", "<<(double)correct/param->numMnistTestImages*100 << ", "<<averagesum4/(i-75)<<", "<<sqrt(stdsum/(i-75))<< endl;
+					read <<usesplit<<", "<<usetrack<<", "<<useprob<<", "<<posIHprob<<", "<<negIHprob<<", "<<posHOprob<<", "<<negHOprob<<", "<<minusactivationlimit<<", "<<use1313<<", "<<use1212<<", "<<use3131<<", "<<use3232<<", "<<use1111<<", "<<use3333<<", "<<detructiveratio1313<<", "<<destructiveratio1212<<", "<<destructiveratio3131<<", "<<destructiveratio3232<<", "<<destructiveratio1111<<", "<<destructiveratio3333<<endl;
 		else
 		read <<param->optimization_type<<", "<<NL_LTP_Gp<<", "<<NL_LTD_Gp<<", "<<NL_LTP_Gn<<", "<<NL_LTD_Gn<<", "<<kp<<", "<<kd<<", "<<knp<<", "<<knd<<", "<<pLA<<", "<<nLA<<", "<<pLAd<<","<<nLAd<<", "<<pof<< ", " <<nof<< ", " <<newUpdateRate<<", "<<nnewUpdateRate<<", "<<ReverseUpdate<<", "<<RefreshRate<<", "<<FullRefresh<<", "<<dominance<<", "<<wv<<", "<<i*param->interNumEpochs<< ", "<<(double)correct/param->numMnistTestImages*100 << ", "<<averagesum5/(i-100)<<", "<<sqrt(stdsum/(i-100))<< endl;
+					read <<usesplit<<", "<<usetrack<<", "<<useprob<<", "<<posIHprob<<", "<<negIHprob<<", "<<posHOprob<<", "<<negHOprob<<", "<<minusactivationlimit<<", "<<use1313<<", "<<use1212<<", "<<use3131<<", "<<use3232<<", "<<use1111<<", "<<use3333<<", "<<detructiveratio1313<<", "<<destructiveratio1212<<", "<<destructiveratio3131<<", "<<destructiveratio3232<<", "<<destructiveratio1111<<", "<<destructiveratio3333<<endl;
 		}
 									
 		/*printf("\tRead latency=%.4e s\n", subArrayIH->readLatency + subArrayHO->readLatency);
