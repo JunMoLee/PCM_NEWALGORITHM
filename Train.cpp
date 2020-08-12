@@ -869,7 +869,7 @@ double s2[param->nOutput];  // Output delta from hidden layer to the output laye
 							      learningrateIH[1] = param->learningrate[0][1];
 							      learningrateIH[2] = param->learningrate[0][2];
 							      learningrateIH[3] = param->learningrate[0][3];
-					                        posstopreverse=0;
+					                      posstopreverse=0;
 						              negstopreverse=0;
 				}
 				                           // reset weightupdatepattern
@@ -907,15 +907,19 @@ double s2[param->nOutput];  // Output delta from hidden layer to the output laye
 							    }  */
 				
 				                          // no probability
-                            				  if(param->useprob==0){
-									
-							      learningrateIH[0] = param->learningrate[0][0];
-							      learningrateIH[1] = param->learningrate[0][1];
-							      learningrateIH[2] = param->learningrate[0][2];
-							      learningrateIH[3] = param->learningrate[0][3];
-									 posstopreverse=0;
-						              negstopreverse=0;
-								}
+				
+                                double conductanceGpIH = static_cast<AnalogNVM*>(arrayIH->cell[jj][k])->conductanceGptotal;
+				double conductanceGnIH = static_cast<AnalogNVM*>(arrayIH->cell[jj][k])->conductanceGntotal;
+			        if(param->usesplit==1){	  if( (0<conductanceGpIH) && (conductanceGpIH<conductancepieceIH) )
+							   {negstopreverse=1;}
+							   
+							  
+				
+							
+					            if( (0<conductanceGnIH) && (conductanceGnIH<conductancepieceIH) )
+							   {posstopreverse=1;}
+							  
+								      }
 				
 				
 				                       // if (epochcount>10) {posstopreverse=1; negstopreverse=1;}
@@ -1584,9 +1588,9 @@ double s2[param->nOutput];  // Output delta from hidden layer to the output laye
 								      else{
 							      posstopreverse=1;
 						              negstopreverse=1;}
-							      }
+							     }
 						
-				                              else
+				                        else   // unspecified weightupdate pattern -> go normal update
 							      {
 							      learningrateHO[0] = param->learningrate[0][0];
 							      learningrateHO[1] = param->learningrate[0][1];
@@ -1598,8 +1602,8 @@ double s2[param->nOutput];  // Output delta from hidden layer to the output laye
 							      }
 								   
 				
-							   }
-				 }
+						    } // end of else 
+				        } // end of useprob
 				else {
 					                      learningrateHO[0] = param->learningrate[0][0];
 							      learningrateHO[1] = param->learningrate[0][1];
@@ -1620,16 +1624,20 @@ double s2[param->nOutput];  // Output delta from hidden layer to the output laye
 			//	if (epochcount>10) {posstopreverse=1; negstopreverse=1;}
 				
 				
-				// no probability
-					                                if(param->useprob==0){
-									
-							      learningrateHO[0] = param->learningrate[0][0];
-							      learningrateHO[1] = param->learningrate[0][1];
-							      learningrateHO[2] = param->learningrate[0][2];
-							      learningrateHO[3] = param->learningrate[0][3];
-									 posstopreverse=0;
-						              negstopreverse=0;
-								}
+
+				
+				double conductanceGpHO = static_cast<AnalogNVM*>(arrayHO->cell[jj][k])->conductanceGptotal;
+				double conductanceGnHO = static_cast<AnalogNVM*>(arrayHO->cell[jj][k])->conductanceGntotal;
+							if(param->usesplit==1){	  if( (0<conductanceGpHO) && (conductanceGpHO<conductancepieceHO) )
+							   {negstopreverse=1;}
+							   
+							  
+				
+							
+					            if( (0<conductanceGnHO) && (conductanceGnHO<conductancepieceHO) )
+							   {posstopreverse=1;}
+							  
+								      }
 				
 				
 							if (AnalogNVM *temp = dynamic_cast<AnalogNVM*>(arrayHO->cell[jj][k])) { // Analog eNVM
