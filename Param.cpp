@@ -80,7 +80,7 @@ for (int r=0; r<100; r++){
 	/* Weight track variables */
 	weighttrack=0;
 	TrackRate=50;
-	useprob=0;
+	useprob=1;
 	posIHprob=11;
 	negIHprob=3;
 	posHOprob=11;
@@ -109,7 +109,7 @@ for (int r=0; r<100; r++){
 	learningratesplit = lrs;
 	adaptiveratio =pow(am/10000,(lrs-1)/2);
 	adaptivemomentum = am/10000;
-	usesplit = 1;
+	usesplit = 0;
 	usetrack = 1;
 	
 	
