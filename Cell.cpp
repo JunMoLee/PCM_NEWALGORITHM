@@ -582,7 +582,6 @@ void RealDevice::Write(double deltaWeightNormalized, double weight, double minWe
 	
 	/* multicell selection */
 	int currentcellnumber = multicellcounter % param->cellnumber;
-	
 	double conductanceNew = conductance;	// =conductance if no update
 	double conductanceNewGp = conductanceGp[currentcellnumber];
 	double conductanceNewGn = conductanceGn[currentcellnumber];
@@ -720,12 +719,12 @@ void RealDevice::newWrite(double deltaWeightNormalized, double weight, double mi
 	int currentcellnumber = multicellcounter % param->cellnumber;
 	int reversecellnumberGp =0;
 	int reversecellnumberGn =0;
-	int currentconductanceGp = pminConductance;
-	int currentconductanceGn = nminConductance;
+	int currentconductanceGp = pmaxConductance;
+	int currentconductanceGn = nmaxConductance;
 	
 	for (int i=0; i<param->cellnumber; i++){
-	if(conductanceGp[i]>currentconductanceGp) {reversecellnumberGp=i; currentconductanceGp=conductanceGp[i];}
-	if(conductanceGn[i]>currentconductanceGn) {reversecellnumberGn=i; currentconductanceGn=conductanceGn[i];}
+	if(conductanceGp[i]<currentconductanceGp) {reversecellnumberGp=i; currentconductanceGp=conductanceGp[i];}
+	if(conductanceGn[i]<currentconductanceGn) {reversecellnumberGn=i; currentconductanceGn=conductanceGn[i];}
 	}
 	// Current conductance (S) (dynamic variable)
 	
