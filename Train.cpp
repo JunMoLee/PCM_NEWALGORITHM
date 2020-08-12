@@ -695,7 +695,7 @@ double s2[param->nOutput];  // Output delta from hidden layer to the output laye
 							      learningrateIH[3] = param->learningrate[0][3];}
 							      else{
 							       learningrateIH[0] = param->learningrate[0][0];
-							      learningrateIH[1] = param->learningrate[0][1]*param->destructiveratio1212;
+							      learningrateIH[1] = param->learningrate[0][1];
 							      learningrateIH[2] = param->learningrate[0][2];
 							      learningrateIH[3] = param->learningrate[0][3];
 							      }
@@ -1424,7 +1424,7 @@ double s2[param->nOutput];  // Output delta from hidden layer to the output laye
 							      learningrateHO[3] = param->learningrate[0][3];}
 							      else
 							      {learningrateHO[0] = param->learningrate[0][0];
-							      learningrateHO[1] = param->learningrate[0][1]*param->destructiveratio1212;
+							      learningrateHO[1] = param->learningrate[0][1];
 							      learningrateHO[2] = param->learningrate[0][2];
 							      learningrateHO[3] = param->learningrate[0][3];
 							      }
@@ -1482,7 +1482,7 @@ double s2[param->nOutput];  // Output delta from hidden layer to the output laye
 							      learningrateHO[2] = param->learningrate[0][2];
 							      learningrateHO[3] = param->learningrate[0][3];}
 							      else
-							      {learningrateHO[0] = param->learningrate[0][0]*param->destructiveratio3232;
+							      {learningrateHO[0] = param->learningrate[0][0];
 							      learningrateHO[1] = param->learningrate[0][1];
 							      learningrateHO[2] = param->learningrate[0][2];
 							      learningrateHO[3] = param->learningrate[0][3];
