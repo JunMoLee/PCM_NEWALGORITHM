@@ -635,7 +635,7 @@ double s2[param->nOutput];  // Output delta from hidden layer to the output laye
 				                           int dd = dynamic_cast<AnalogNVM*>(arrayIH->cell[jj][k])->dd[allocationmethod1];
 				                           int activationindex= bb*hiddenpiece + dd;
 				
-				 if(0){	  if( (0<conductanceGpIH) && (conductanceGpIH<conductancepieceIH) )
+				 if(param->usesplit){	  if( (0<conductanceGpIH) && (conductanceGpIH<conductancepieceIH) )
 							  	{negstopreverse=1;}
 							   
 							  
@@ -644,7 +644,7 @@ double s2[param->nOutput];  // Output delta from hidden layer to the output laye
 					                  if( (0<conductanceGnIH) && (conductanceGnIH<conductancepieceIH) )
 							  	{posstopreverse=1;}
 							  
-						     }  
+				      }  
                           
 						          // adpative weight update 
 				if(param->useprob==1) {
@@ -1362,7 +1362,7 @@ double s2[param->nOutput];  // Output delta from hidden layer to the output laye
 
 				double conductanceGpHO = static_cast<AnalogNVM*>(arrayHO->cell[jj][k])->conductanceGptotal;
 				double conductanceGnHO = static_cast<AnalogNVM*>(arrayHO->cell[jj][k])->conductanceGntotal; 
-						if(0){	  if( (0<conductanceGpHO) && (conductanceGpHO<conductancepieceHO) )
+				if(param->usesplit){	  if( (0<conductanceGpHO) && (conductanceGpHO<conductancepieceHO) )
 							
 							   {negstopreverse=1;}
 							   
