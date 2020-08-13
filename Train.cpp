@@ -830,8 +830,8 @@ double s2[param->nOutput];  // Output delta from hidden layer to the output laye
 							      }
 								               // reset stopreverse
 								      if((a1[activationindex]>=param->minusactivationlimit)&&(reset2==1)){
-						              posstopreverse=0;
-						              negstopreverse=1;}
+						              posstopreverse=1;
+						              negstopreverse=0;}
 								      else{
 							      posstopreverse=1;
 						              negstopreverse=1;}
@@ -861,8 +861,8 @@ double s2[param->nOutput];  // Output delta from hidden layer to the output laye
 							      }
 								               // reset stopreverse
 										      if((a1[activationindex]>=0)&&(reset1==1)){
-						              posstopreverse=1;
-						              negstopreverse=0;}
+						              posstopreverse=0;
+						              negstopreverse=1;}
 								      else{
 							      posstopreverse=1;
 						              negstopreverse=1;}
@@ -1578,8 +1578,8 @@ double s2[param->nOutput];  // Output delta from hidden layer to the output laye
 							      }
 								               // reset stopreverse
 							if((reset2==1) && (a2[activationindex]>=param->minusactivationlimit)){
-						              posstopreverse=0;
-						              negstopreverse=1;}
+						              posstopreverse=1;
+						              negstopreverse=0;}
 								      else{
 							      posstopreverse=1;
 						              negstopreverse=1;}
@@ -1609,8 +1609,8 @@ double s2[param->nOutput];  // Output delta from hidden layer to the output laye
 							      }
 								               // reset stopreverse
 						             if((a2[activationindex]>=0)&&(reset1==1)){
-						              posstopreverse=1;
-						              negstopreverse=0;}
+						              posstopreverse=0;
+						              negstopreverse=1;}
 								      else{
 							      posstopreverse=1;
 						              negstopreverse=1;}
