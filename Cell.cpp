@@ -777,7 +777,7 @@ void RealDevice::newWrite(double deltaWeightNormalized, double weight, double mi
 		else
 		deltaWeightNormalized = truncate(deltaWeightNormalized, maxNumLevelnLTD);
 				
-		if(ignoreposreverse == 1){
+		if(ignoreposreverse == 0){
 		numPulse = deltaWeightNormalized * maxNumLevelnLTD; }
 		else numPulse=0;
 				
@@ -839,7 +839,7 @@ void RealDevice::newWrite(double deltaWeightNormalized, double weight, double mi
 		else
 		deltaWeightNormalized = truncate(deltaWeightNormalized, maxNumLevelpLTD);
 				
-		if(ignorenegreverse == 1){
+		if(ignorenegreverse == 0){
 		numPulse = deltaWeightNormalized * maxNumLevelpLTD;}
 		else numPulse = 0;
 				
