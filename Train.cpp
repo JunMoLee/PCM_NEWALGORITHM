@@ -647,7 +647,7 @@ double s2[param->nOutput];  // Output delta from hidden layer to the output laye
 				      }  
                           
 						          // adpative weight update 
-				if(param->useprob==1) {
+				if(param->useprob==1) { if(param->useupdatepattern == 1) {
 				                           if((batchSize+numTrain*(epochcount-1))==param->TrackRate*2-1)
 							   {			 
 							      if(updatepattern[areanum][0]*1000+updatepattern[areanum][1]*100+updatepattern[areanum][2]*10+updatepattern[areanum][3] == 2211)
@@ -860,30 +860,44 @@ double s2[param->nOutput];  // Output delta from hidden layer to the output laye
 							      learningrateIH[3] = param->learningrate[0][3];
 							      }
 								               // reset stopreverse
-										      if((a1[activationindex]>=0)&&(reset1==1)){
-						              posstopreverse=0;
-						              negstopreverse=1;}
+							       if((a1[activationindex]>=0)&&(reset1==1)){
+						              	 posstopreverse=0;
+						                 negstopreverse=1;}
 								      else{
-							      posstopreverse=1;
-						              negstopreverse=1;}
-							      }
+							         posstopreverse=1;
+						                 negstopreverse=1;}
+							         }
+								   
 								   // default case
 								   
-				                              else
-							      {
-							      learningrateIH[0] = param->learningrate[0][0];
+				                             else
+							     {
+							     learningrateIH[0] = param->learningrate[0][0];
+							     learningrateIH[1] = param->learningrate[0][1];
+							     learningrateIH[2] = param->learningrate[0][2];
+							     learningrateIH[3] = param->learningrate[0][3];
+								               // reset stopreverse
+						             posstopreverse=1;
+						             negstopreverse=1;
+							     }
+								   
+		
+							   } // end of else
+				
+						      } // end of useupdatepattern
+				else {
+					                      learningrateIH[0] = param->learningrate[0][0];
 							      learningrateIH[1] = param->learningrate[0][1];
 							      learningrateIH[2] = param->learningrate[0][2];
 							      learningrateIH[3] = param->learningrate[0][3];
-								               // reset stopreverse
-						              posstopreverse=1;
-						              negstopreverse=1;
-							      }
-								   
-		
-							   }
-				}
-				else {
+							      if(reset1==1) posstopreverse=0; else posstopreverse=1;
+						              if(reset2==1) negstopreverse=0; else negstopreverse=1;
+					
+				}  // end of (else) useupdatepattern 
+						       
+			} // end of useprob
+			
+			else {
 						              learningrateIH[0] = param->learningrate[0][0];
 							      learningrateIH[1] = param->learningrate[0][1];
 							      learningrateIH[2] = param->learningrate[0][2];
@@ -1403,6 +1417,7 @@ double s2[param->nOutput];  // Output delta from hidden layer to the output laye
 				
 							   // adpative weight update 
 				 if((param->useprob)==1){
+					if((param->useupdatepattern)==1){
 				                         if((batchSize+numTrain*(epochcount-1))==param->TrackRate*2-1)
 							   {
 							      if(updatepattern[areanum][0]*1000+updatepattern[areanum][1]*100+updatepattern[areanum][2]*10+updatepattern[areanum][3] == 2211)
@@ -1629,6 +1644,16 @@ double s2[param->nOutput];  // Output delta from hidden layer to the output laye
 								   
 				
 						    } // end of else 
+					} // end of use update pattern
+					 else{
+						 	      learningrateHO[0] = param->learningrate[0][0];
+							      learningrateHO[1] = param->learningrate[0][1];
+							      learningrateHO[2] = param->learningrate[0][2];
+							      learningrateHO[3] = param->learningrate[0][3];
+								               // reset stopreverse
+						              if(reset1==1) posstopreverse=0; else posstopreverse=1;
+						              if(reset2==1) negstopreverse=0; else negstopreverse=1;
+					 }
 				        } // end of useprob
 				else {
 					                      learningrateHO[0] = param->learningrate[0][0];
