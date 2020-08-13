@@ -636,13 +636,13 @@ double s2[param->nOutput];  // Output delta from hidden layer to the output laye
 				                           int activationindex= bb*hiddenpiece + dd;
 				
 				 if(param->usesplit){	  if( (0<conductanceGpIH) && (conductanceGpIH<conductancepieceIH) )
-							  	{negstopreverse=1;}
+							  	{ignorenegreverse=1;}
 							   
 							  
 				
 							
 					                  if( (0<conductanceGnIH) && (conductanceGnIH<conductancepieceIH) )
-							  	{posstopreverse=1;}
+							  	{ignoreposreverse=1;}
 							  
 				      }  
                           
@@ -830,8 +830,8 @@ double s2[param->nOutput];  // Output delta from hidden layer to the output laye
 							      }
 								               // reset stopreverse
 								      if((a1[activationindex]>=param->minusactivationlimit)&&(reset2==1)){
-						              posstopreverse=1;
-						              negstopreverse=0;}
+						              posstopreverse=0;
+						              negstopreverse=1;}
 								      else{
 							      posstopreverse=1;
 						              negstopreverse=1;}
@@ -861,8 +861,8 @@ double s2[param->nOutput];  // Output delta from hidden layer to the output laye
 							      }
 								               // reset stopreverse
 										      if((a1[activationindex]>=0)&&(reset1==1)){
-						              posstopreverse=0;
-						              negstopreverse=1;}
+						              posstopreverse=1;
+						              negstopreverse=0;}
 								      else{
 							      posstopreverse=1;
 						              negstopreverse=1;}
@@ -1325,7 +1325,9 @@ double s2[param->nOutput];  // Output delta from hidden layer to the output laye
                             {
                                 maxWeightUpdated =fabs(deltaWeight2[jj][k]);
                             }
-                        */		
+                        */	
+			    int ignoreposreverse = 0;
+			    int ignorenegreverse = 0;
 		            int reset1=0;
 			/*   if((dynamic_cast<AnalogNVM*>(arrayHO->cell[jj][k])->dd==(counteradaptHO)) || (dynamic_cast<AnalogNVM*>(arrayHO->cell[jj][k])->dd==(counteradaptHO+1)))
 			    {reset=1;} */
@@ -1364,14 +1366,14 @@ double s2[param->nOutput];  // Output delta from hidden layer to the output laye
 				double conductanceGnHO = static_cast<AnalogNVM*>(arrayHO->cell[jj][k])->conductanceGntotal; 
 				if(param->usesplit){	  if( (0<conductanceGpHO) && (conductanceGpHO<conductancepieceHO) )
 							
-							   {negstopreverse=1;}
+							   {ignorenegreverse=1;}
 							   
 							  
 				
 							
 					                 if( (0<conductanceGnHO) && (conductanceGnHO<conductancepieceHO) )
 							 
-							   {posstopreverse=1;}
+							   {ignoreposreverse=1;}
 							  
 								      } 
                          
@@ -1576,8 +1578,8 @@ double s2[param->nOutput];  // Output delta from hidden layer to the output laye
 							      }
 								               // reset stopreverse
 							if((reset2==1) && (a2[activationindex]>=param->minusactivationlimit)){
-						              posstopreverse=1;
-						              negstopreverse=0;}
+						              posstopreverse=0;
+						              negstopreverse=1;}
 								      else{
 							      posstopreverse=1;
 						              negstopreverse=1;}
@@ -1607,8 +1609,8 @@ double s2[param->nOutput];  // Output delta from hidden layer to the output laye
 							      }
 								               // reset stopreverse
 						             if((a2[activationindex]>=0)&&(reset1==1)){
-						              posstopreverse=0;
-						              negstopreverse=1;}
+						              posstopreverse=1;
+						              negstopreverse=0;}
 								      else{
 							      posstopreverse=1;
 						              negstopreverse=1;}
