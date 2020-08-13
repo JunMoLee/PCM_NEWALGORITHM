@@ -593,10 +593,10 @@ double s2[param->nOutput];  // Output delta from hidden layer to the output laye
                             // verify lowest Gp or probabilitstically deternmine cell to reset//
 			    
 			    int reset1=0;
-		            random_device rd;
-			    mt19937 gen(rd());
-			    uniform_int_distribution<int> dis(0,param->posIHprob);
-			 if(dis(gen)==0) reset1=1; 
+		            random_device rd0;
+			    mt19937 gen0(rd0());
+			    uniform_int_distribution<int> dis0(0,param->posIHprob);
+			 if(dis0(gen0)==0) reset1=1; 
 				
 			   int reset2=0;
 		            random_device rd1;
@@ -631,7 +631,7 @@ double s2[param->nOutput];  // Output delta from hidden layer to the output laye
 
                                                            int areanum=dynamic_cast<AnalogNVM*>(arrayIH->cell[jj][k])->areanumber[allocationmethod1];
 				                           double learningrateIH [4];
-				                            int bb= dynamic_cast<AnalogNVM*>(arrayIH->cell[jj][k])->bb[allocationmethod1];
+				                           int bb= dynamic_cast<AnalogNVM*>(arrayIH->cell[jj][k])->bb[allocationmethod1];
 				                           int dd = dynamic_cast<AnalogNVM*>(arrayIH->cell[jj][k])->dd[allocationmethod1];
 				                           int activationindex= bb*hiddenpiece + dd;
 				
@@ -1330,19 +1330,19 @@ double s2[param->nOutput];  // Output delta from hidden layer to the output laye
 			/*   if((dynamic_cast<AnalogNVM*>(arrayHO->cell[jj][k])->dd==(counteradaptHO)) || (dynamic_cast<AnalogNVM*>(arrayHO->cell[jj][k])->dd==(counteradaptHO+1)))
 			    {reset=1;} */
 			    
-			  random_device rd;
-			    mt19937 gen(rd());
-			    uniform_int_distribution<int> dis(0,param->posHOprob);
-			   if(dis(gen)==0) reset1=1; 
+			  random_device rd2;
+			  mt19937 gen2(rd2());
+			  uniform_int_distribution<int> dis2(0,param->posHOprob);
+			  if(dis2(gen2)==0) reset1=1; 
 				
-					            int reset2=0;
+			    int reset2=0;
 			/*   if((dynamic_cast<AnalogNVM*>(arrayHO->cell[jj][k])->dd==(counteradaptHO)) || (dynamic_cast<AnalogNVM*>(arrayHO->cell[jj][k])->dd==(counteradaptHO+1)))
 			    {reset=1;} */
 			    
-			  random_device rd1;
-			    mt19937 gen1(rd1());
-			    uniform_int_distribution<int> dis1(0,param->negHOprob);
-			 if(dis1(gen1)==0) reset2=1; 
+			  random_device rd3;
+			  mt19937 gen3(rd3());
+			  uniform_int_distribution<int> dis3(0,param->negHOprob);
+			  if(dis3(gen3)==0) reset2=1; 
 				
 			/*   int adaptivegradient=0;
 			    for(int f=param->associatedindex[dynamic_cast<AnalogNVM*>(arrayHO->cell[jj][k])->areanum][0]; f<param->associatedindex[dynamic_cast<AnalogNVM*>(arrayHO->cell[jj][k])->areanum][1]; f++)
