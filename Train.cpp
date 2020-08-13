@@ -607,16 +607,7 @@ double s2[param->nOutput];  // Output delta from hidden layer to the output laye
 				
 			   	  double conductanceGpIH = static_cast<AnalogNVM*>(arrayIH->cell[jj][k])->conductanceGptotal;
 				double conductanceGnIH = static_cast<AnalogNVM*>(arrayIH->cell[jj][k])->conductanceGntotal;
-			        if(param->usesplit){	  if( (0<conductanceGpIH) && (conductanceGpIH<conductancepieceIH) )
-							   {negstopreverse=1;}
-							   
-							  
-				
-							
-					            if( (0<conductanceGnIH) && (conductanceGnIH<conductancepieceIH) )
-							   {posstopreverse=1;}
-							  
-								      } 
+			       
 				
 				
 				
@@ -644,8 +635,17 @@ double s2[param->nOutput];  // Output delta from hidden layer to the output laye
 				                           int dd = dynamic_cast<AnalogNVM*>(arrayIH->cell[jj][k])->dd[allocationmethod1];
 				                           int activationindex= bb*hiddenpiece + dd;
 				
+				 if(0){	  if( (0<conductanceGpIH) && (conductanceGpIH<conductancepieceIH) )
+							  	{negstopreverse=1;}
+							   
+							  
 				
-
+							
+					                  if( (0<conductanceGnIH) && (conductanceGnIH<conductancepieceIH) )
+							  	{posstopreverse=1;}
+							  
+						     } 
+                          
 						          // adpative weight update 
 				if(param->useprob==1) {
 				                           if((batchSize+numTrain*(epochcount-1))==param->TrackRate*2-1)
@@ -891,6 +891,7 @@ double s2[param->nOutput];  // Output delta from hidden layer to the output laye
 					                      posstopreverse=0;
 						              negstopreverse=0;
 				}
+		     
 				                           // reset weightupdatepattern
 				                                
 				                
@@ -1361,7 +1362,7 @@ double s2[param->nOutput];  // Output delta from hidden layer to the output laye
 
 				double conductanceGpHO = static_cast<AnalogNVM*>(arrayHO->cell[jj][k])->conductanceGptotal;
 				double conductanceGnHO = static_cast<AnalogNVM*>(arrayHO->cell[jj][k])->conductanceGntotal;
-							if(param->usesplit){	  if( (0<conductanceGpHO) && (conductanceGpHO<conductancepieceHO) )
+							if(0){	  if( (0<conductanceGpHO) && (conductanceGpHO<conductancepieceHO) )
 							
 							   {negstopreverse=1;}
 							   
