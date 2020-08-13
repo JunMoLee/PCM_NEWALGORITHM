@@ -156,6 +156,7 @@ public:
 	double adaptiveratio;
 	double adaptivemomentum;
 	int usesplit =1;
+	int useupdatepattern = 1;
 	
 	
 	
