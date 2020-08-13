@@ -111,7 +111,7 @@ for (int r=0; r<100; r++){
 	adaptivemomentum = am/10000;
 	usesplit = 0;
 	usetrack = 1;
-	
+	useupdatepattern =1;
 	
 	
 	/* Algorithm parameters */
