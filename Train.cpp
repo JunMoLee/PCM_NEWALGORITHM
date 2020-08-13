@@ -645,19 +645,7 @@ double s2[param->nOutput];  // Output delta from hidden layer to the output laye
 				                           int activationindex= bb*hiddenpiece + dd;
 				
 				
-double conductanceGpIH = static_cast<AnalogNVM*>(arrayIH->cell[jj][k])->conductanceGptotal;
-				double conductanceGnIH = static_cast<AnalogNVM*>(arrayIH->cell[jj][k])->conductanceGntotal;
-			        if(param->usesplit){	  if( (0<conductanceGpIH) && (conductanceGpIH<conductancepieceIH) )
-							   {negstopreverse=1;}
-							   
-							  
-				
-							
-					            if( (0<conductanceGnIH) && (conductanceGnIH<conductancepieceIH) )
-							   {posstopreverse=1;}
-							  
-								      } 
-				               
+
 						          // adpative weight update 
 				if(param->useprob==1) {
 				                           if((batchSize+numTrain*(epochcount-1))==param->TrackRate*2-1)
