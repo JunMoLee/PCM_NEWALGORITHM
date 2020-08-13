@@ -1010,7 +1010,7 @@ double s2[param->nOutput];  // Output delta from hidden layer to the output laye
 								
 								if(((batchSize+numTrain*(epochcount-1)) % (int)(param->newUpdateRate/adNur))*param->ReverseUpdate==((int)(param->newUpdateRate/adNur-1)))
 								// reverse update condition
-								arrayIH->WriteCell(jj, k, deltaWeight1[jj][k], weight1[jj][k], param->maxWeight, param->minWeight, true, !(posstopreverse*negstopreverse), (!posstopreverse*negstopreverse), !posstopreverse*!negstopreverse, learningrateIH, ignoreposreverse, ignorenegreverse);;
+								arrayIH->WriteCell(jj, k, deltaWeight1[jj][k], weight1[jj][k], param->maxWeight, param->minWeight, true, !(posstopreverse*negstopreverse), (!posstopreverse*negstopreverse), !posstopreverse*!negstopreverse, learningrateIH, ignoreposreverse, ignorenegreverse);
 									
 								else{ // normal update
 								arrayIH->WriteCell(jj, k, deltaWeight1[jj][k], weight1[jj][k], param->maxWeight, param->minWeight, true, false, false, false,  learningrateIH, ignoreposreverse, ignorenegreverse);	
