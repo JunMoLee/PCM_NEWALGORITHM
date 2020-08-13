@@ -1372,7 +1372,7 @@ double s2[param->nOutput];  // Output delta from hidden layer to the output laye
 							 
 							   {posstopreverse=1;}
 							  
-								      } *
+								      } 
                          
 				                         
 				                    /*  switch (areanumber2) // allocate learning rate for each area
