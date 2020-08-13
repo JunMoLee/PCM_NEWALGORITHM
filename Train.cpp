@@ -605,14 +605,14 @@ double s2[param->nOutput];  // Output delta from hidden layer to the output laye
 			   if(dis1(gen1)==0) reset2=1; 
 			    
 				
-			/*   	  double conductanceGpIH = static_cast<AnalogNVM*>(arrayIH->cell[jj][k])->conductanceGptotal;
+			  	  double conductanceGpIH = static_cast<AnalogNVM*>(arrayIH->cell[jj][k])->conductanceGptotal;
 				double conductanceGnIH = static_cast<AnalogNVM*>(arrayIH->cell[jj][k])->conductanceGntotal;
 			       
 				
 				
 				
 				int ignoreposreverse=0;
-				int ignorenegreverse=0; */
+				int ignorenegreverse=0; 
 				
 				
 			 /*   if((dynamic_cast<AnalogNVM*>(arrayIH->cell[jj][k])->dd==counteradaptIH) || (dynamic_cast<AnalogNVM*>(arrayIH->cell[jj][k])->dd==(counteradaptIH + 1)))
@@ -635,7 +635,7 @@ double s2[param->nOutput];  // Output delta from hidden layer to the output laye
 				                           int dd = dynamic_cast<AnalogNVM*>(arrayIH->cell[jj][k])->dd[allocationmethod1];
 				                           int activationindex= bb*hiddenpiece + dd;
 				
-			/*	 if(0){	  if( (0<conductanceGpIH) && (conductanceGpIH<conductancepieceIH) )
+				 if(0){	  if( (0<conductanceGpIH) && (conductanceGpIH<conductancepieceIH) )
 							  	{negstopreverse=1;}
 							   
 							  
@@ -644,7 +644,7 @@ double s2[param->nOutput];  // Output delta from hidden layer to the output laye
 					                  if( (0<conductanceGnIH) && (conductanceGnIH<conductancepieceIH) )
 							  	{posstopreverse=1;}
 							  
-						     }  */
+						     }  
                           
 						          // adpative weight update 
 				if(param->useprob==1) {
@@ -1360,9 +1360,9 @@ double s2[param->nOutput];  // Output delta from hidden layer to the output laye
 				                           int activationindex= bb*(param->nOutput/os) + dd;
 				                           // classify area by index
 
-			/*	double conductanceGpHO = static_cast<AnalogNVM*>(arrayHO->cell[jj][k])->conductanceGptotal;
-				double conductanceGnHO = static_cast<AnalogNVM*>(arrayHO->cell[jj][k])->conductanceGntotal; */
-				/*			if(0){	  if( (0<conductanceGpHO) && (conductanceGpHO<conductancepieceHO) )
+				double conductanceGpHO = static_cast<AnalogNVM*>(arrayHO->cell[jj][k])->conductanceGptotal;
+				double conductanceGnHO = static_cast<AnalogNVM*>(arrayHO->cell[jj][k])->conductanceGntotal; 
+						if(0){	  if( (0<conductanceGpHO) && (conductanceGpHO<conductancepieceHO) )
 							
 							   {negstopreverse=1;}
 							   
@@ -1373,7 +1373,7 @@ double s2[param->nOutput];  // Output delta from hidden layer to the output laye
 							 
 							   {posstopreverse=1;}
 							  
-								      }  */
+								      } 
                          
 				                         
 				                    /*  switch (areanumber2) // allocate learning rate for each area
