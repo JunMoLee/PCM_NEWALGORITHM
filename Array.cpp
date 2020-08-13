@@ -186,9 +186,9 @@ void Array::WriteCell(int x, int y, double deltaWeight, double weight, double ma
 		}
 		// Reverse update
 		/**/ else {  if(!dominance/*check for coinciding +,- reverse update*/) // limiting one side of reverse update
-			static_cast<RealDevice*>(cell[x][y])->newWrite(deltaWeight, weight, minWeight, maxWeight, positiveupdate, learningrate);
+			static_cast<RealDevice*>(cell[x][y])->newWrite(deltaWeight, weight, minWeight, maxWeight, positiveupdate, learningrate, ignoreposreverse, ignorenegreverse);
 		      else // allowing bidrectional reverse update
-			static_cast<RealDevice*>(cell[x][y])->newWrite(deltaWeight, weight, minWeight, maxWeight, deltaweightsign, learningrate);
+			static_cast<RealDevice*>(cell[x][y])->newWrite(deltaWeight, weight, minWeight, maxWeight, deltaweightsign, learningrate, ignoreposreverse, ignorenegreverse);
 			      
 		} /**/
 		
