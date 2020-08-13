@@ -645,7 +645,18 @@ double s2[param->nOutput];  // Output delta from hidden layer to the output laye
 				                           int activationindex= bb*hiddenpiece + dd;
 				
 				
-
+double conductanceGpIH = static_cast<AnalogNVM*>(arrayIH->cell[jj][k])->conductanceGptotal;
+				double conductanceGnIH = static_cast<AnalogNVM*>(arrayIH->cell[jj][k])->conductanceGntotal;
+			        if(param->usesplit){	  if( (0<conductanceGpIH) && (conductanceGpIH<conductancepieceIH) )
+							   {negstopreverse=1;}
+							   
+							  
+				
+							
+					            if( (0<conductanceGnIH) && (conductanceGnIH<conductancepieceIH) )
+							   {posstopreverse=1;}
+							  
+								      } 
 				               
 						          // adpative weight update 
 				if(param->useprob==1) {
@@ -937,18 +948,7 @@ double s2[param->nOutput];  // Output delta from hidden layer to the output laye
 							  /* new update */
 								
  if (param->ReverseUpdate){ // start of if
-	/*  double conductanceGpIH = static_cast<AnalogNVM*>(arrayIH->cell[jj][k])->conductanceGptotal;
-				double conductanceGnIH = static_cast<AnalogNVM*>(arrayIH->cell[jj][k])->conductanceGntotal;
-			        if(param->usesplit){	  if( (0<conductanceGpIH) && (conductanceGpIH<conductancepieceIH) )
-							   {negstopreverse=1;}
-							   
-							  
-				
-							
-					            if( (0<conductanceGnIH) && (conductanceGnIH<conductancepieceIH) )
-							   {posstopreverse=1;}
-							  
-								      } */
+	
 								
 							    if ((int)(param->newUpdateRate/adNur)<(int)(param->nnewUpdateRate/adNur)){ // if + reverse update is faster than - reverse update
 
@@ -1411,7 +1411,7 @@ double s2[param->nOutput];  // Output delta from hidden layer to the output laye
 						       } */
 				
 							   // adpative weight update 
-				 if(param->useprob==1){
+				 if((param->useprob)==1){
 				                         if((batchSize+numTrain*(epochcount-1))==param->TrackRate*2-1)
 							   {
 							      if(updatepattern[areanum][0]*1000+updatepattern[areanum][1]*100+updatepattern[areanum][2]*10+updatepattern[areanum][3] == 2211)
