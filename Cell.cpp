@@ -709,47 +709,46 @@ void RealDevice::newWrite(double deltaWeightNormalized, double weight, double mi
 	int currentcellnumber = 0;
 	/* check which cell to update  */
 	if(deltaWeightNormalized > 0) {
-		if (conductanceGp[0] > gth2)
+	
+		if ((conductanceGp[0]-conductanceGp[1]) > gth2)
 		{conductanceGp[0]=pminConductance; // reset
 		conductanceGp[1]=pminConductance; // reset
-		reverseupdate = 0;}
-		else if ((conductanceGp[0] > gth1) &(conductanceGp[0] < gth2))
+		reverseupdate = 0;
+		}
+		
+		
+		else if (((conductanceGp[0]-conductanceGp[1]) > gth1) && ((conductanceGp[0]-conductanceGp[1]) < gth2))
 		{// check if Gp - Gp' is over Vth1
-			if((conductanceGp[0]-conductanceGp[1]) < gth1)
-			{
+
+			currentcellnumber = 1;	
+
+		}
+		else{
 			conductanceGp[0]= gth1; // set conductance Gp to Vth1
 			conductanceGp[1]=pminConductance;
 			reverseupdate = 0; // ignore when Gp - Gp' is under Vth1
-			}
-			else{ // effective reverse update
-			currentcellnumber = 1;	// start update Gp'
-			}
-		}
-		else{
-			reverseupdate = 0; // ignore when Gp is under Vth1
 		}
 			
 	}
 
 	else{
-		if (conductanceGn[0] > gth2)
-		{conductanceGn[0]=nminConductance; //reset
-		conductanceGn[1]=nminConductance;
-		reverseupdate = 0;}
-		else if ((conductanceGn[0] > gth1) &(conductanceGn[0] < gth2))
+			if ((conductanceGn[0]-conductanceGn[1]) > gth2)
+		{conductanceGn[0]=n minConductance; // reset
+		conductanceGn[1]=nminConductance; // reset
+		reverseupdate = 0;
+		}
+		
+		
+		else if (((conductanceGn[0]-conductanceGn[1]) > gth1) && ((conductanceGn[0]-conductanceGn[1]) < gth2))
 		{// check if Gp - Gp' is over Vth1
-			if((conductanceGn[0]-conductanceGn[1]) < gth1)
-			{
-			conductanceGn[0]=gth1; // set conductance Gp to Vth1
-			conductanceGn[1]=nminConductance;
-			reverseupdate = 0; // ignore when Gn - Gn' is under Vth1
-			}
-			else{ // effective reverse update
-			currentcellnumber = 1;	// start update Gn'
-			}
+
+			currentcellnumber = 1;	
+
 		}
 		else{
-			reverseupdate = 0; // ignore when Gn is under Vth1
+			conductanceGn[0]= gth1; // set conductance Gp to Vth1
+			conductanceGn[1]= nminConductance;
+			reverseupdate = 0; // ignore when Gp - Gp' is under Vth1
 		}
 			
 	}
