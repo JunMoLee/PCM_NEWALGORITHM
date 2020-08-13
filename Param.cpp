@@ -81,6 +81,9 @@ for (int r=0; r<100; r++){
 	weighttrack=0;
 	TrackRate=50;
 	useprob=1;
+	usesplit = 1;
+	usetrack = 1;
+	useupdatepattern =0;
 	posIHprob=11;
 	negIHprob=3;
 	posHOprob=11;
@@ -109,9 +112,7 @@ for (int r=0; r<100; r++){
 	learningratesplit = lrs;
 	adaptiveratio =pow(am/10000,(lrs-1)/2);
 	adaptivemomentum = am/10000;
-	usesplit = 0;
-	usetrack = 1;
-	useupdatepattern =1;
+
 	
 	
 	/* Algorithm parameters */
@@ -208,11 +209,11 @@ for (int r=0; r<100; r++){
 	frr=1000;
 	RefreshRate = frr;
 	const int 
-	nur=6;
+	nur=50;
 	const int 
 	rnur=1;
 	const int
-	nurn=2;
+	nurn=50;
 	newUpdateRate = nur; // rate of new update algorithm implementation (per # of images)
 	nnewUpdateRate = nurn;
 	cellnumber=3;
