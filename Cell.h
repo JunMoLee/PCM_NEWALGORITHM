@@ -265,7 +265,7 @@ public:
 	double Read(double voltage);	// Return read current (A)
 	void InitialWrite (double deltaweight);
 	void Write(double deltaWeightNormalized, double weight, double minWeight, double maxWeight , double learningrate [] = param -> defaultlearningrate[0]);
-	void newWrite(double deltaWeightNormalized, double weight, double minWeight, double maxWeight, bool positiveupdate, double learningrate  [] = param -> defaultlearningrate[0]);
+	void newWrite(double deltaWeightNormalized, double weight, double minWeight, double maxWeight, bool positiveupdate, double learningrate  [] = param -> defaultlearningrate[0], int stopposreverse=0, int stopnegreverse=0);
 	void Erase();
 };
 
