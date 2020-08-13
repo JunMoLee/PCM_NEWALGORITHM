@@ -713,7 +713,7 @@ void RealDevice::Write(double deltaWeightNormalized, double weight, double minWe
 
 ////////new write/////////////
 
-void RealDevice::newWrite(double deltaWeightNormalized, double weight, double minWeight, double maxWeight, bool positiveupdate, double  learningrate []) {
+void RealDevice::newWrite(double deltaWeightNormalized, double weight, double minWeight, double maxWeight, bool positiveupdate, double  learningrate [], int ignoreposreverse, int ignorenegreverse) {
 	
 	/* pick the cell with lowest Gp, Gn */
 	int currentcellnumber = multicellcounter % param->cellnumber;
@@ -776,7 +776,11 @@ void RealDevice::newWrite(double deltaWeightNormalized, double weight, double mi
 		deltaWeightNormalized = newtruncate(deltaWeightNormalized, maxNumLevelnLTD);
 		else
 		deltaWeightNormalized = truncate(deltaWeightNormalized, maxNumLevelnLTD);
-		numPulse = deltaWeightNormalized * maxNumLevelnLTD;
+				
+		if(ignoreposreverse == 1){
+		numPulse = deltaWeightNormalized * maxNumLevelnLTD; }
+		else numPulse=0;
+				
 		posstep+=numPulse;
 		if (numPulse > maxNumLevelnLTD) {
 			numPulse = maxNumLevelnLTD;
@@ -834,7 +838,11 @@ void RealDevice::newWrite(double deltaWeightNormalized, double weight, double mi
 		deltaWeightNormalized =newtruncate(deltaWeightNormalized, maxNumLevelpLTD);
 		else
 		deltaWeightNormalized = truncate(deltaWeightNormalized, maxNumLevelpLTD);
-		numPulse = deltaWeightNormalized * maxNumLevelpLTD;
+				
+		if(ignorenegreverse == 1){
+		numPulse = deltaWeightNormalized * maxNumLevelpLTD;}
+		else numPulse = 0;
+				
 		negstep += numPulse;
 		if (numPulse > maxNumLevelpLTD) {
 			numPulse = maxNumLevelpLTD;
